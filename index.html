@@ -30,6 +30,86 @@
     </button>
   </div>
 </header>
+
+<div class="p-4 space-y-4 max-w-3xl mx-auto" id="posts-container">
+    <p class="text-center text-gray-400">Loading hot posts...</p>
+  </div>
+
+  <footer class="text-center text-sm text-gray-600 mt-6 mb-4">
+    © 2025 r/jeeneetards. Braincells not guaranteed.
+  </footer>
+
+  <script>
+    async function loadPosts() {
+      const container = document.getElementById("posts-container");
+      try {
+        const res = await fetch("https://www.reddit.com/r/jeeneetards/hot.json?limit=10");
+        if (!res.ok) throw new Error("Subreddit may be private or not exist.");
+        const data = await res.json();
+        const posts = data.data.children;
+
+        if (posts.length === 0) {
+          container.innerHTML = `<p class="text-center text-gray-400">No posts found.</p>`;
+          return;
+        }
+
+        container.innerHTML = "";
+
+        posts.forEach(({ data: post }) => {
+          const postDiv = document.createElement("div");
+          postDiv.className = "bg-gray-800 rounded-xl p-4 shadow hover:shadow-xl transition";
+
+          let content = "";
+
+          if (post.post_hint === "image" && post.url) {
+            content = `<img src="${post.url}" alt="meme" class="mt-4 rounded-md max-h-72 w-full object-cover">`;
+          } else if (post.selftext) {
+            content = `<p class="mt-3 text-gray-200 text-sm">${post.selftext.substring(0, 250)}...</p>`;
+          }
+
+          postDiv.innerHTML = `
+            <h2 class="text-xl font-semibold text-lime-300">${post.title}</h2>
+            <p class="text-gray-400 text-sm mt-1">u/${post.author} • 🔥 ${post.ups} • 💬 ${post.num_comments}</p>
+            ${content}
+            <div class="mt-3 text-sm text-gray-400">
+              <a href="https://reddit.com${post.permalink}" target="_blank" class="hover:text-lime-400">🔗 View on Reddit</a>
+            </div>
+          `;
+
+          container.appendChild(postDiv);
+        });
+      } catch (error) {
+        console.error(error);
+        container.innerHTML = `<p class="text-center text-red-400"> Failed to load posts. Reason: ${error.message}</p>`;
+      }
+    }
+
+    loadPosts();
+  </script>
+
+
+    <!-- Sidebar -->
+    <aside class="w-full lg:w-1/4 space-y-4">
+      <div class="bg-gray-800 rounded-xl p-4">
+        <h3 class="text-lg font-semibold text-lime-400">🔥 Trending</h3>
+        <ul class="mt-3 text-sm text-gray-300 space-y-2">
+          <li>• NEET topper reveals he never touched NCRT</li>
+          <li>• "Drop year is therapy" hits 5k upvotes</li>
+          <li>• Coaching teacher caught vibing to KR$NA</li>
+        </ul>
+      </div>
+      <div class="bg-gray-800 rounded-xl p-4">
+        <h3 class="text-lg font-semibold text-lime-400">🧠 Brainrot Categories</h3>
+        <ul class="mt-3 text-sm text-gray-300 space-y-2">
+          <li><a href="#" class="hover:text-lime-300">IIT Memes</a></li>
+          <li><a href="#" class="hover:text-lime-300">Dropper Life</a></li>
+          <li><a href="#" class="hover:text-lime-300">Coaching Horror</a></li>
+          <li><a href="#" class="hover:text-lime-300">Post Exam Depression</a></li>
+        </ul>
+      </div>
+    </aside>
+
+  </div>
     
 </body>
 </html>
