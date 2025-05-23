@@ -1,111 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JEENEETards</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <script>
-  function updateCountdown(id, examDate) {
-    const el = document.getElementById(id);
-    const targetDate = new Date(examDate);
-
-    if (isNaN(targetDate)) {
-      el.innerText = "TBA";
-      el.classList.add("text-red-400", "italic");
-      return;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JEENEETards</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <script>
+    function updateCountdown(id, examDate) {
+      const el = document.getElementById(id);
+      const targetDate = new Date(examDate);
+      if (isNaN(targetDate)) {
+        el.innerText = "TBA";
+        el.classList.add("text-red-400", "italic");
+        return;
+      }
+      const now = new Date().getTime();
+      const distance = targetDate.getTime() - now;
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      const milliseconds = distance % 1000;
+      el.innerText = distance > 0
+        ? `${days}d ${hours}h ${minutes}m ${seconds}s ${milliseconds}ms`
+        : "It's Today!";
     }
 
-    const now = new Date().getTime();
-    const distance = targetDate.getTime() - now;
+    setInterval(() => {
+      updateCountdown('jee-main', '2025-04-01T00:00:00');
+      updateCountdown('jee-adv', '2025-06-02T00:00:00');
+      updateCountdown('neet', 'TBA');
+    }, 50);
+  </script>
+</head>
+<body class="bg-gray-900 text-white font-sans">
 
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    const milliseconds = distance % 1000;
+  <header class="bg-gray-900 shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-wrap items-center justify-between">
+      <div class="flex items-center gap-3">
+        <img src="/assets/communityIcon_j5nctdyq50rb1.jpg" alt="Logo" class="w-10 h-10 rounded-full" />
+        <span class="text-xl font-bold text-white">JEENEETards</span>
+      </div>
+      <nav class="hidden md:flex gap-6 text-sm lg:text-base">
+        <a href="index.html" class="hover:font-semibold hover:underline hover:text-lime-300">Home</a>
+        <a href="trending.html" class="hover:font-semibold hover:underline hover:text-lime-300">Trending</a>
+        <a href="pomodoro.html" class="hover:font-semibold hover:underline hover:text-lime-300">Pomodoro</a>
+        <a href="about-us.html" class="hover:font-semibold hover:underline hover:text-lime-300">About Us</a>
+      </nav>
+      <a href="/mod.html" class="mt-4 md:mt-0 bg-green-500 hover:bg-green-800 px-4 py-2 rounded text-sm text-white">Mod Appreciated Posts</a>
+    </div>
+  </header>
 
-    el.innerText = distance > 0
-      ? `${days}d ${hours}h ${minutes}m ${seconds}s ${milliseconds}ms`
-      : "It's Today!";
-  }
-
-  setInterval(() => {
-    updateCountdown('jee-main', '2025-04-01T00:00:00');
-    updateCountdown('jee-adv', '2025-06-02T00:00:00');
-    updateCountdown('neet', 'TBA');
-  }, 50);
-</script>
-<body>
-
-    <header class="text-gray-400 bg-gray-900 body-font">
-  <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-    <a class="flex title-font font-medium items-center text-white mb-4 md:mb-0">
-      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="0" class="w-10 h-10 text-white p-2 bg-transparent-500 rounded-full" viewBox="0 0 24 24" style="--darkreader-inline-stroke: currentColor;" data-darkreader-inline-stroke="">
-     <image href="/assets/communityIcon_j5nctdyq50rb1.jpg" x="2" y="2" width="20" height="20" />
-        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-      </svg>
-      <span class="ml-3 text-xl">JEENEETards</span>
-    </a>
-    <nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-700	flex flex-wrap items-center text-base justify-center">
-      <a href="index.html" class="mr-5 hover:font-semibold hover:underline hover:italic hover:text-lime-300 hover:rounded-full">Home</a>
-      <a href="trending.html" class="mr-5 hover:font-semibold hover:underline hover:italic hover:text-lime-300 hover:rounded-full">Trending</a>
-      <a href="pomodoro.html" class="mr-5 hover:font-semibold hover:underline hover:italic hover:text-lime-300 hover:rounded-full">Pomodoro</a>
-      <a href="about-us.html" class="mr-5 hover:font-semibold hover:underline hover:italic hover:text-lime-300 hover:rounded-full">About Us</a>
-    </nav>
+  <main class="px-4 py-10 max-w-7xl mx-auto space-y-12">
     
-    <a href="/mod.html" class="inline-flex items-center bg-green-300 border-0 py-1 px-3 focus:outline-white hover:bg-green-900 rounded text-base mt-4 md:mt-0 text-white">Mod Appreciated Posts</a>
-      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24" style="--darkreader-inline-stroke: currentColor;" data-darkreader-inline-stroke="">
-        <path d="M5 12h14M12 5l7 7-7 7"></path>
-      </svg>
-    </button>
-  </div>
-</header>
+    <section class="text-center space-y-8">
+      <h2 class="text-3xl font-bold">📅 Exam Countdown</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-gray-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold">JEE Main</p>
+          <p id="jee-main" class="text-lime-400 text-xl mt-2">Loading...</p>
+        </div>
+        <div class="bg-gray-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold">JEE Advanced</p>
+          <p id="jee-adv" class="text-lime-400 text-xl mt-2">Loading...</p>
+        </div>
+        <div class="bg-gray-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold">NEET</p>
+          <p id="neet" class="text-lime-400 text-xl mt-2">Loading...</p>
+        </div>
+      </div>
+    </section>
 
-<section class="bg-gray-800 text-center text-white py-8">
-  <h2 class="text-2xl font-bold mb-4">📅 Exam Countdown</h2>
-  <div class="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-8">
-    <div class="bg-gray-700 p-4 rounded-lg shadow-lg">
-      <p class="text-lg font-semibold">JEE Main</p>
-      <p id="jee-main" class="text-lime-400 text-xl mt-2">Loading...</p>
-    </div>
-    <div class="bg-gray-700 p-4 rounded-lg shadow-lg">
-      <p class="text-lg font-semibold">JEE Advanced</p>
-      <p id="jee-adv" class="text-lime-400 text-xl mt-2">Loading...</p>
-    </div>
-    <div class="bg-gray-700 p-4 rounded-lg shadow-lg">
-      <p class="text-lg font-semibold">NEET</p>
-      <p id="neet" class="text-lime-400 text-xl mt-2">Loading...</p>
-    </div>
-  </div>
-</section>
-
-  <footer class="text-center text-sm text-gray-600 mt-6 mb-4">
-    © 2025 r/jeeneetards. Braincells not guaranteed.
-  </footer>
-
-    <!-- Sidebar -->
-    <aside class="w-full lg:w-1/4 space-y-4">
-      <div class="bg-gray-800 rounded-xl p-4">
-        <h3 class="text-lg font-semibold text-lime-400">🔥 Trending</h3>
-        <ul class="mt-3 text-sm text-gray-300 space-y-2">
+    <!-- Sidebar / Trending & Categories -->
+    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+      
+      <div class="bg-gray-800 p-6 rounded-xl">
+        <h3 class="text-xl font-semibold text-lime-400">🔥 Trending</h3>
+        <ul class="mt-4 text-sm text-gray-300 space-y-2">
           <li>• NEET topper reveals he never touched NCRT</li>
           <li>• "Drop year is therapy" hits 5k upvotes</li>
           <li>• Coaching teacher caught vibing to KR$NA</li>
         </ul>
       </div>
-      <div class="bg-gray-800 rounded-xl p-4">
-        <h3 class="text-lg font-semibold text-lime-400">🧠 Brainrot Categories</h3>
-        <ul class="mt-3 text-sm text-gray-300 space-y-2">
+
+      <div class="bg-gray-800 p-6 rounded-xl">
+        <h3 class="text-xl font-semibold text-lime-400">🧠 Brainrot Categories</h3>
+        <ul class="mt-4 text-sm text-gray-300 space-y-2">
           <li><a href="https://www.reddit.com/r/JEENEETards/?f=flair_name%3A%22Meme%20%3Asnoo_trollface%3A%22" class="hover:text-lime-300">IIT Memes</a></li>
           <li><a href="#" class="hover:text-lime-300">Dropper Life</a></li>
           <li><a href="#" class="hover:text-lime-300">Coaching Horror</a></li>
           <li><a href="https://www.reddit.com/r/JEENEETards/?f=flair_name%3A%22Rant%20%3Asnoo_feelsbadman%3A%22" class="hover:text-lime-300">Post Exam Depression</a></li>
         </ul>
       </div>
-    </aside>
+    </section>
 
-  </div>
-    
+  </main>
+
+  <footer class="bg-gray-800 py-6 mt-12 text-center text-sm text-gray-500">
+    © 2025 r/jeeneetards. Braincells not guaranteed.
+  </footer>
+
 </body>
 </html>
