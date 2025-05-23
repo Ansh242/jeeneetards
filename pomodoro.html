@@ -1,55 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pomodoro</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pomodoro</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body>
+<body class="bg-gray-900 text-white">
 
-    <header class="text-gray-400 bg-gray-900 body-font">
-  <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-    <a class="flex title-font font-medium items-center text-white mb-4 md:mb-0">
-      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="0" class="w-10 h-10 text-white p-2 bg-transparent-500 rounded-full" viewBox="0 0 24 24" style="--darkreader-inline-stroke: currentColor;" data-darkreader-inline-stroke="">
-     <image href="/assets/communityIcon_j5nctdyq50rb1.jpg" x="2" y="2" width="20" height="20" />
-        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-      </svg>
-      <span class="ml-3 text-xl">JEENEETards</span>
-    </a>
-    <nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-700	flex flex-wrap items-center text-base justify-center">
-      <a href="index.html" class="mr-5 hover:font-semibold hover:underline hover:italic hover:text-lime-300 hover:rounded-full">Home</a>
-      <a href="trending.html" class="mr-5 hover:font-semibold hover:underline hover:italic hover:text-lime-300 hover:rounded-full">Trending</a>
-      <a href="pomodoro.html" class="mr-5 hover:font-semibold hover:underline hover:italic hover:text-lime-300 hover:rounded-full">Pomodoro</a>
-      <a href="about-us.html" class="mr-5 hover:font-semibold hover:underline hover:italic hover:text-lime-300 hover:rounded-full">About Us</a>
-    </nav>
-    
-    <a href="/mod.html" class="inline-flex items-center bg-green-300 border-0 py-1 px-3 focus:outline-white hover:bg-green-900 rounded text-base mt-4 md:mt-0 text-white">Mod Appreciated Posts</a>
-      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24" style="--darkreader-inline-stroke: currentColor;" data-darkreader-inline-stroke="">
-        <path d="M5 12h14M12 5l7 7-7 7"></path>
-      </svg>
-    </button>
-  </div>
-</header>
+  <header class="text-gray-400 bg-gray-900 body-font w-full px-4 sm:px-6">
+    <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+      <a class="flex title-font font-medium items-center text-white mb-4 md:mb-0">
+        <svg class="w-10 h-10 text-white p-2 bg-transparent rounded-full" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <image href="/assets/communityIcon_j5nctdyq50rb1.jpg" x="2" y="2" width="20" height="20"/>
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+        <span class="ml-3 text-xl">JEENEETards</span>
+      </a>
+      <nav class="md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-700 flex flex-wrap items-center text-base justify-center">
+        <a href="index.html" class="mr-5 hover:font-semibold hover:underline hover:italic hover:text-lime-300 rounded-full">Home</a>
+        <a href="trending.html" class="mr-5 hover:font-semibold hover:underline hover:italic hover:text-lime-300 rounded-full">Trending</a>
+        <a href="pomodoro.html" class="mr-5 hover:font-semibold hover:underline hover:italic hover:text-lime-300 rounded-full">Pomodoro</a>
+        <a href="about-us.html" class="mr-5 hover:font-semibold hover:underline hover:italic hover:text-lime-300 rounded-full">About Us</a>
+      </nav>
+      <a href="/mod.html" class="inline-flex items-center bg-green-300 border-0 py-1 px-3 focus:outline-none hover:bg-green-900 rounded text-base mt-4 md:mt-0 text-white transition">
+        Mod Appreciated Posts
+        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+  </header>
 
-<!-- Pomodoro Section -->
-  <section class="text-center py-12">
+  <section class="text-center px-4 sm:px-6 md:px-10 lg:px-20 py-12 max-w-4xl mx-auto">
     <h1 class="text-4xl font-bold text-lime-400 mb-2">🍅 Custom Pomodoro Timer</h1>
     <p class="mb-6 text-gray-400">Set your own focus & break durations.</p>
 
-    <div class="mb-6 space-x-4">
-      <label>Focus (min): <input id="focusInput" type="number" value="25" class="text-black w-16 px-2 py-1 rounded"/></label>
-      <label>Break (min): <input id="breakInput" type="number" value="5" class="text-black w-16 px-2 py-1 rounded"/></label>
-      <button onclick="setCustomTimes()" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded ml-2">Set</button>
+    <div class="mb-6 flex flex-wrap justify-center gap-4">
+      <label class="text-sm">Focus (min): 
+        <input id="focusInput" type="number" value="25" class="text-black w-20 px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-lime-300"/>
+      </label>
+      <label class="text-sm">Break (min): 
+        <input id="breakInput" type="number" value="5" class="text-black w-20 px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-lime-300"/>
+      </label>
+      <button onclick="setCustomTimes()" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-md transition shadow-sm">Set</button>
     </div>
 
-    <div class="text-6xl font-mono mb-6" id="timer">25:00</div>
+    <div class="text-5xl sm:text-6xl font-mono mb-6" id="timer">25:00</div>
     <p id="sessionType" class="mb-4 text-lg font-semibold text-yellow-300">Session: Focus</p>
 
-    <div class="space-x-4">
-      <button onclick="startTimer()" class="bg-lime-300 hover:bg-lime-600 text-white font-bold py-2 px-4 rounded">Start</button>
-      <button onclick="pauseTimer()" class="bg-yellow-300 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded">Pause</button>
-      <button onclick="resetTimer()" class="bg-red-300 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">Reset</button>
+    <div class="flex flex-wrap justify-center gap-4 mt-6">
+      <button onclick="startTimer()" class="bg-lime-300 hover:bg-lime-600 text-white font-bold py-2 px-4 rounded-md transition">Start</button>
+      <button onclick="pauseTimer()" class="bg-yellow-300 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-md transition">Pause</button>
+      <button onclick="resetTimer()" class="bg-red-300 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-md transition">Reset</button>
     </div>
   </section>
 
@@ -62,14 +65,13 @@
     let onBreak = false;
 
     function updateDisplay() {
-  const minutes = Math.floor(timeLeft / 60);
-  const seconds = timeLeft % 60;
-  const formatted = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-
-  document.getElementById("timer").textContent = formatted;
-  document.getElementById("sessionType").textContent = `Session: ${onBreak ? "Break" : "Focus"}`;
-  document.title = `⏱ ${formatted} • ${onBreak ? "Break" : "Focus"} | JEENEETards`;
-}
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      const formatted = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+      document.getElementById("timer").textContent = formatted;
+      document.getElementById("sessionType").textContent = `Session: ${onBreak ? "Break" : "Focus"}`;
+      document.title = `⏱ ${formatted} • ${onBreak ? "Break" : "Focus"} | JEENEETards`;
+    }
 
     function startTimer() {
       if (isRunning) return;
@@ -118,4 +120,4 @@
   </script>
 
 </body>
-</html>  
+</html>
