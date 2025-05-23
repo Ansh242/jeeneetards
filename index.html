@@ -6,28 +6,36 @@
     <title>JEENEETards</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script>
-      function updateCountdown(id, examDate) {
-        const now = new Date().getTime();
-        const distance = new Date(examDate).getTime() - now;
+  function updateCountdown(id, examDate) {
+    const el = document.getElementById(id);
+    const targetDate = new Date(examDate);
 
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        const milliseconds = distance % 1000;
+    if (isNaN(targetDate)) {
+      el.innerText = "TBA";
+      el.classList.add("text-red-400", "italic");
+      return;
+    }
 
-        document.getElementById(id).innerText = distance > 0
-          ? `${days}d ${hours}h ${minutes}m ${seconds}s ${milliseconds}ms`
-          : "It's Today!";
-      }
+    const now = new Date().getTime();
+    const distance = targetDate.getTime() - now;
 
-      setInterval(() => {
-        updateCountdown('jee-main', '2025-04-01T00:00:00');
-        updateCountdown('jee-adv', '2025-06-02T00:00:00');
-        updateCountdown('neet', '2025-05-04T00:00:00');
-      }, 50);
-    </script>
-</head>
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    const milliseconds = distance % 1000;
+
+    el.innerText = distance > 0
+      ? `${days}d ${hours}h ${minutes}m ${seconds}s ${milliseconds}ms`
+      : "It's Today!";
+  }
+
+  setInterval(() => {
+    updateCountdown('jee-main', '2025-04-01T00:00:00');
+    updateCountdown('jee-adv', '2025-06-02T00:00:00');
+    updateCountdown('neet', 'TBA');
+  }, 50);
+</script>
 <body>
 
     <header class="text-gray-400 bg-gray-900 body-font">
