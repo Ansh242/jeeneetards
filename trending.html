@@ -1,61 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trending</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Trending</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="bg-gray-900 text-white font-sans">
 
-    <header class="text-gray-400 bg-gray-900 body-font">
-  <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-    <a class="flex title-font font-medium items-center text-white mb-4 md:mb-0">
-      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="0" class="w-10 h-10 text-white p-2 bg-transparent-500 rounded-full" viewBox="0 0 24 24" style="--darkreader-inline-stroke: currentColor;" data-darkreader-inline-stroke="">
-     <image href="/assets/communityIcon_j5nctdyq50rb1.jpg" x="2" y="2" width="20" height="20" />
-        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-      </svg>
-      <span class="ml-3 text-xl">JEENEETards</span>
-    </a>
-    <nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-700	flex flex-wrap items-center text-base justify-center">
-      <a href="index.html" class="mr-5 hover:font-semibold hover:underline hover:italic hover:text-lime-300 hover:rounded-full">Home</a>
-      <a href="trending.html" class="mr-5 hover:font-semibold hover:underline hover:italic hover:text-lime-300 hover:rounded-full">Trending</a>
-      <a href="pomodoro.html" class="mr-5 hover:font-semibold hover:underline hover:italic hover:text-lime-300 hover:rounded-full">Pomodoro</a>
-      <a href="about-us.html" class="mr-5 hover:font-semibold hover:underline hover:italic hover:text-lime-300 hover:rounded-full">About Us</a>
-    </nav>
-    
-    <a href="/mod.html" class="inline-flex items-center bg-green-300 border-0 py-1 px-3 focus:outline-white hover:bg-green-900 rounded text-base mt-4 md:mt-0 text-white">Mod Appreciated Posts</a>
-      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24" style="--darkreader-inline-stroke: currentColor;" data-darkreader-inline-stroke="">
-        <path d="M5 12h14M12 5l7 7-7 7"></path>
-      </svg>
-    </button>
-  </div>
-</header>
+  <header class="bg-gray-900 sticky top-0 z-50 shadow-md">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between px-4 py-5">
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="/assets/communityIcon_j5nctdyq50rb1.jpg" alt="Logo" class="w-10 h-10 rounded-full">
+        <span class="text-xl font-bold text-white">JEENEETards</span>
+      </a>
 
-<article
-  class="w-72 bg-gray-700 shadow p-4 space-y-2 rounded-md hover:-translate-y-2 duration-300"
->
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    height="24"
-    width="24"
-    xmlns="http://www.w3.org/2000/svg"
-    aria-hidden="true"
-    class="w-10 h-10 text-gray-300 bg-gray-600 rounded-full p-1"
-  >
-    <path
-      d="m8.032 12 1.984 1.984 4.96-4.96m4.55 5.272.893-.893a1.984 1.984 0 0 0 0-2.806l-.893-.893a1.984 1.984 0 0 1-.581-1.403V7.04a1.984 1.984 0 0 0-1.984-1.984h-1.262a1.983 1.983 0 0 1-1.403-.581l-.893-.893a1.984 1.984 0 0 0-2.806 0l-.893.893a1.984 1.984 0 0 1-1.403.581H7.04A1.984 1.984 0 0 0 5.055 7.04v1.262c0 .527-.209 1.031-.581 1.403l-.893.893a1.984 1.984 0 0 0 0 2.806l.893.893c.372.372.581.876.581 1.403v1.262a1.984 1.984 0 0 0 1.984 1.984h1.262c.527 0 1.031.209 1.403.581l.893.893a1.984 1.984 0 0 0 2.806 0l.893-.893a1.985 1.985 0 0 1 1.403-.581h1.262a1.984 1.984 0 0 0 1.984-1.984V15.7c0-.527.209-1.031.581-1.403Z"
-      stroke-width="2"
-      stroke-linejoin="round"
-      stroke-linecap="round"
-      stroke="currentColor"
-    ></path>
-  </svg>
-  <p class="text-sm w-full text-gray-400">
-    COMING SOON!!
-  </p>
-</article>
+      <nav class="flex flex-wrap gap-4 mt-4 md:mt-0 text-sm md:text-base">
+        <a href="index.html" class="hover:text-lime-300 hover:underline hover:font-semibold">Home</a>
+        <a href="trending.html" class="hover:text-lime-300 hover:underline hover:font-semibold">Trending</a>
+        <a href="pomodoro.html" class="hover:text-lime-300 hover:underline hover:font-semibold">Pomodoro</a>
+        <a href="about-us.html" class="hover:text-lime-300 hover:underline hover:font-semibold">About Us</a>
+      </nav>
+
+      <a href="/mod.html" class="mt-4 md:mt-0 bg-green-500 hover:bg-green-700 text-white text-sm px-4 py-2 rounded shadow transition duration-300">
+        Mod Appreciated Posts
+      </a>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-4 py-12">
+    <section class="flex justify-center">
+      <article class="w-full max-w-xs bg-gray-800 text-center p-6 rounded-xl shadow-lg hover:-translate-y-1 transition-transform duration-300">
+        <div class="flex justify-center mb-4">
+          <svg viewBox="0 0 24 24" fill="none" class="w-10 h-10 text-gray-300 bg-gray-700 p-2 rounded-full" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8.032 12l1.984 1.984 4.96-4.96m4.55 5.272.893-.893a1.984 1.984 0 000-2.806l-.893-.893a1.984 1.984 0 01-.581-1.403V7.04a1.984 1.984 0 00-1.984-1.984h-1.262a1.983 1.983 0 01-1.403-.581l-.893-.893a1.984 1.984 0 00-2.806 0l-.893.893a1.984 1.984 0 01-1.403.581H7.04A1.984 1.984 0 005.055 7.04v1.262c0 .527-.209 1.031-.581 1.403l-.893.893a1.984 1.984 0 000 2.806l.893.893c.372.372.581.876.581 1.403v1.262a1.984 1.984 0 001.984 1.984h1.262c.527 0 1.031.209 1.403.581l.893.893a1.984 1.984 0 002.806 0l.893-.893a1.985 1.985 0 011.403-.581h1.262a1.984 1.984 0 001.984-1.984V15.7c0-.527.209-1.031.581-1.403z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h2 class="text-lg font-bold text-lime-400 mb-2">COMING SOON!!</h2>
+        <p class="text-sm text-gray-400">This section will feature the hottest posts and trends from r/JEENEETards.</p>
+      </article>
+    </section>
+  </main>
+
+  <footer class="bg-gray-800 py-6 mt-12 text-center text-sm text-gray-500">
+    © 2025 r/jeeneetards. Even brainrot needs breaks.
+  </footer>
 
 </body>
 </html>
