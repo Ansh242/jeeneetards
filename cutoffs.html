@@ -1,32 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Trending</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
+<body class="bg-gray-900 text-white font-sans">
 
-<body class="bg-gray-900 text-gray-200">
-    <header class="text-gray-400 bg-gray-900 body-font">
-        <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-            <a class="flex title-font font-medium items-center text-white mb-4 md:mb-0">
-                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="0" class="w-10 h-10 text-white p-2 bg-transparent-500 rounded-full" viewBox="0 0 24 24">
-                    <image href="/assets/communityIcon_j5nctdyq50rb1.jpg" x="2" y="2" width="20" height="20" />
-                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-                </svg>
-                <span class="ml-3 text-xl">JEENEETards</span>
-            </a>
-            <nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-700 flex flex-wrap items-center text-base justify-center">
-                <a href="index.html" class="mr-5 hover:font-semibold hover:underline hover:italic hover:text-lime-300 hover:rounded-full">Home</a>
-                <a href="trending.html" class="mr-5 hover:font-semibold hover:underline hover:italic hover:text-lime-300 hover:rounded-full">Trending</a>
-                <a href="pomodoro.html" class="mr-5 hover:font-semibold hover:underline hover:italic hover:text-lime-300 hover:rounded-full">Pomodoro</a>
-                <a href="college-predictor.html" class="mr-5 hover:font-semibold hover:underline hover:italic hover:text-lime-300 hover:rounded-full">College Predictor</a>
-                <a href="dashboard.html" class="mr-5 hover:font-semibold hover:underline hover:italic hover:text-lime-300 hover:rounded-full">Dashboard</a>
-            </nav>
-        </div>
-    </header>
+  <header class="bg-gray-900 sticky top-0 z-50 shadow-md">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between px-4 py-5">
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="/assets/communityIcon_j5nctdyq50rb1.jpg" alt="Logo" class="w-10 h-10 rounded-full">
+        <span class="text-xl font-bold text-white">JEENEETards</span>
+      </a>
+
+      <nav class="flex flex-wrap gap-4 mt-4 md:mt-0 text-sm md:text-base">
+        <a href="index.html" class="hover:text-lime-300 hover:underline hover:font-semibold">Home</a>
+        <a href="trending.html" class="hover:text-lime-300 hover:underline hover:font-semibold">Trending</a>
+        <a href="pomodoro.html" class="hover:text-lime-300 hover:underline hover:font-semibold">Pomodoro</a>
+        <a href="cutoffs.html" class="hover:text-lime-300 hover:underline hover:font-semibold">Cutoffs</a>  
+        <a href="about-us.html" class="hover:text-lime-300 hover:underline hover:font-semibold">About Us</a>
+      </nav>
+
+      <a href="/mod.html" class="mt-4 md:mt-0 bg-green-500 hover:bg-green-700 text-white text-sm px-4 py-2 rounded shadow transition duration-300">
+        Mod Appreciated Posts
+      </a>
+    </div>
+  </header>
 
     <main class="container mx-auto p-6">
         <h1 class="text-3xl font-bold text-center text-blue-400 mb-6">📊 JEE Mains Dashboard</h1>
