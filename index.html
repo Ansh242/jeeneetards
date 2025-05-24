@@ -26,11 +26,28 @@
         : "It's Today!";
     }
 
-    setInterval(() => {
-      updateCountdown('jee-main', '2025-04-01T00:00:00');
-      updateCountdown('jee-adv', '2025-06-02T00:00:00');
-      updateCountdown('neet', 'TBA');
-    }, 50);
+    function fetchSubredditStats() {
+      fetch("https://www.reddit.com/r/JEENEETards/about.json")
+        .then(res => res.json())
+        .then(data => {
+          const members = data.data.subscribers.toLocaleString();
+          const online = data.data.accounts_active.toLocaleString();
+          document.getElementById("subreddit-stats").innerText = `👥 ${members} members • 🟢 ${online} online`;
+        })
+        .catch(() => {
+          document.getElementById("subreddit-stats").innerText = "Failed to load stats.";
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      setInterval(() => {
+        updateCountdown('jee-main', '2025-04-01T00:00:00');
+        updateCountdown('jee-adv', '2025-06-02T00:00:00');
+        updateCountdown('neet', 'TBA');
+      }, 50);
+      fetchSubredditStats();
+      setInterval(fetchSubredditStats, 60000);
+    });
   </script>
 </head>
 <body class="bg-gray-900 text-white font-sans">
@@ -94,6 +111,11 @@
         </ul>
       </div>
     </section>
+
+    <!-- Subreddit Stats -->
+    <div id="subreddit-stats" class="text-sm text-gray-400 text-center mt-12">
+      Fetching stats...
+    </div>
 
   </main>
 
