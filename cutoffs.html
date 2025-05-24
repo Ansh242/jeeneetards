@@ -63,45 +63,14 @@
                     </tr>
                 </thead>
                 <tbody id="cutoffTable">
-                    <tr><td>General</td><td>90.778</td></tr>
-                    <tr><td>EWS</td><td>75.622</td></tr>
-                    <tr><td>OBC</td><td>73.611</td></tr>
-                    <tr><td>SC</td><td>51.977</td></tr>
-                    <tr><td>ST</td><td>37.234</td></tr>
+                    <tr><td>General</td><td>93.1023262</td></tr>
+                    <tr><td>EWS</td><td>80.3830119</td></tr>
+                    <tr><td>OBC</td><td>79.4313582</td></tr>
+                    <tr><td>SC</td><td>61.1526933</td></tr>
+                    <tr><td>ST</td><td>47.9026465</td></tr>
                 </tbody>
             </table>
         </section>
-
-        <section class="bg-gray-800 rounded-lg p-4">
-            <h2 class="text-xl font-semibold text-center text-cyan-400 mb-2">Marks vs Percentile</h2>
-            <div class="flex justify-center mb-4">
-                <label for="examSelect" class="mr-2">Choose Exam:</label>
-                <select id="examSelect" onchange="updateMarksTable()" class="text-black px-2 py-1 rounded">
-                    <option value="Mains">JEE Mains</option>
-                    <option value="Advanced">JEE Advanced</option>
-                </select>
-            </div>
-            <table class="w-full text-xs text-center">
-                <thead>
-                    <tr class="bg-gray-700">
-                        <th>Percentile</th>
-                        <th>Marks</th>
-                    </tr>
-                </thead>
-                <tbody id="marksTable">
-                    <tr><td>100</td><td>300</td></tr>
-                    <tr><td>99.9</td><td>285</td></tr>
-                    <tr><td>99.5</td><td>265</td></tr>
-                    <tr><td>99</td><td>245</td></tr>
-                    <tr><td>98</td><td>225</td></tr>
-                    <tr><td>95</td><td>205</td></tr>
-                    <tr><td>90</td><td>180</td></tr>
-                    <tr><td>85</td><td>165</td></tr>
-                    <tr><td>80</td><td>150</td></tr>
-                </tbody>
-            </table>
-        </section>
-    </main>
 
     <script>
         const dataByYear = {
