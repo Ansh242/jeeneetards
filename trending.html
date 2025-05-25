@@ -1,51 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Trending</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Trending - JEENEETards</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 <body class="bg-gray-900 text-white font-sans">
 
-  <header class="bg-gray-900 sticky top-0 z-50 shadow-md">
-    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between px-4 py-5">
-      <a href="index.html" class="flex items-center gap-3">
-        <img src="/assets/communityIcon_j5nctdyq50rb1.jpg" alt="Logo" class="w-10 h-10 rounded-full">
-        <span class="text-xl font-bold text-white">JEENEETards</span>
+  <header class="text-gray-400 bg-gray-900 body-font shadow-md sticky top-0 z-50">
+    <div class="container mx-auto flex flex-wrap p-4 md:p-6 flex-col md:flex-row items-center justify-between">
+      <a class="flex title-font font-medium items-center text-white mb-4 md:mb-0">
+        <svg fill="none" stroke="currentColor" stroke-width="0" class="w-10 h-10 p-1 bg-transparent rounded-full" viewBox="0 0 24 24">
+          <image href="/assets/communityIcon_j5nctdyq50rb1.jpg" x="2" y="2" width="20" height="20" />
+        </svg>
+        <span class="ml-3 text-xl">JEENEETards</span>
       </a>
-
-      <nav class="flex flex-wrap gap-4 mt-4 md:mt-0 text-sm md:text-base">
-        <a href="index.html" class="hover:font-semibold hover:underline hover:text-lime-300">Home</a>
+      <nav class="flex flex-wrap items-center justify-center gap-4 text-sm md:text-base">
+       <a href="index.html" class="hover:font-semibold hover:underline hover:text-lime-300">Home</a>
         <a href="trending.html" class="hover:font-semibold hover:underline hover:text-lime-300">Trending</a>
         <a href="pomodoro.html" class="hover:font-semibold hover:underline hover:text-lime-300">Pomodoro</a>
         <a href="cutoffs.html" class="hover:font-semibold hover:underline hover:text-lime-300">Cutoffs</a>  
         <a href="about-us.html" class="hover:font-semibold hover:underline hover:text-lime-300">About Us</a>
-      </nav>
-
-      <a href="/mod.html" class="mt-4 md:mt-0 bg-green-500 hover:bg-green-700 text-white text-sm px-4 py-2 rounded shadow transition duration-300">
+      <a href="/mod.html" class="mt-4 md:mt-0 inline-flex items-center bg-green-300 hover:bg-green-800 text-white py-2 px-4 rounded text-sm">
         Mod Appreciated Posts
+        <svg fill="none" stroke="currentColor" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
+          <path d="M5 12h14M12 5l7 7-7 7"></path>
+        </svg>
       </a>
     </div>
   </header>
 
-  <main class="max-w-4xl mx-auto px-4 py-12">
-    <section class="flex justify-center">
-      <article class="w-full max-w-xs bg-gray-800 text-center p-6 rounded-xl shadow-lg hover:-translate-y-1 transition-transform duration-300">
-        <div class="flex justify-center mb-4">
-          <svg viewBox="0 0 24 24" fill="none" class="w-10 h-10 text-gray-300 bg-gray-700 p-2 rounded-full" xmlns="http://www.w3.org/2000/svg">
-            <path d="M8.032 12l1.984 1.984 4.96-4.96m4.55 5.272.893-.893a1.984 1.984 0 000-2.806l-.893-.893a1.984 1.984 0 01-.581-1.403V7.04a1.984 1.984 0 00-1.984-1.984h-1.262a1.983 1.983 0 01-1.403-.581l-.893-.893a1.984 1.984 0 00-2.806 0l-.893.893a1.984 1.984 0 01-1.403.581H7.04A1.984 1.984 0 005.055 7.04v1.262c0 .527-.209 1.031-.581 1.403l-.893.893a1.984 1.984 0 000 2.806l.893.893c.372.372.581.876.581 1.403v1.262a1.984 1.984 0 001.984 1.984h1.262c.527 0 1.031.209 1.403.581l.893.893a1.984 1.984 0 002.806 0l.893-.893a1.985 1.985 0 011.403-.581h1.262a1.984 1.984 0 001.984-1.984V15.7c0-.527.209-1.031.581-1.403z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <h2 class="text-lg font-bold text-lime-400 mb-2">COMING SOON!!</h2>
-        <p class="text-sm text-gray-400">This section will feature the hottest posts and trends from r/JEENEETards.</p>
-      </article>
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <section class="bg-gray-800 p-6 rounded-xl shadow-xl space-y-6">
+      <h1 class="text-3xl sm:text-4xl font-bold text-lime-400 text-center">🔥 Trending Posts</h1>
+      <div id="trending-posts" class="space-y-6">
+        <p class="text-center text-gray-400">Loading hot posts...</p>
+      </div>
+      <div id="loading-indicator" class="text-center text-gray-400 py-4 hidden">Loading more...</div>
     </section>
   </main>
 
-  <footer class="bg-gray-800 py-6 mt-12 text-center text-sm text-gray-500">
-    © 2025 r/jeeneetards. Even brainrot needs breaks.
-  </footer>
+  <script>
+    const container = document.getElementById('trending-posts');
+    const loadingIndicator = document.getElementById('loading-indicator');
+    let after = null;
+    let isLoading = false;
+
+    async function fetchHotPosts() {
+      if (isLoading) return;
+      isLoading = true;
+      loadingIndicator.classList.remove('hidden');
+
+      try {
+        const url = `https://www.reddit.com/r/JEENEETards/hot.json?limit=10${after ? `&after=${after}` : ''}`;
+        const response = await fetch(url);
+        const data = await response.json();
+        const posts = data.data.children;
+        after = data.data.after;
+
+        if (!posts.length) {
+          container.innerHTML += '<p class="text-center text-gray-400">No more posts.</p>';
+          return;
+        }
+
+        if (container.innerHTML.includes('Loading hot posts')) container.innerHTML = '';
+
+        posts.forEach(post => {
+          const d = post.data;
+          const title = d.title;
+          const author = d.author;
+          const score = d.score;
+          const permalink = d.permalink;
+          const previewImage = d.preview?.images?.[0]?.source?.url?.replaceAll("&amp;", "&");
+
+          const postElement = document.createElement('div');
+          postElement.className = "bg-gray-700 p-4 rounded-lg shadow-md hover:bg-gray-600 transition";
+
+          postElement.innerHTML = `
+            <a href="https://www.reddit.com${permalink}" target="_blank">
+              <h2 class="text-xl font-semibold text-lime-300 hover:underline">${title}</h2>
+            </a>
+            <p class="text-sm text-gray-400 mt-1">u/${author} • ${score} upvotes</p>
+            ${previewImage ? `<img src="${previewImage}" alt="Post image" class="mt-4 rounded-lg max-h-96 w-full object-cover border border-gray-600"/>` : ''}
+          `;
+
+          container.appendChild(postElement);
+        });
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+        container.innerHTML += '<p class="text-center text-red-400">Failed to load more posts.</p>';
+      } finally {
+        isLoading = false;
+        loadingIndicator.classList.add('hidden');
+      }
+    }
+
+    fetchHotPosts();
+
+    window.addEventListener('scroll', () => {
+      const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+      if (scrollTop + clientHeight >= scrollHeight - 100 && !isLoading && after) {
+        fetchHotPosts();
+      }
+    });
+  </script>
 
 </body>
 </html>
