@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support JEENEETards - Donation</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#10b981',
+            secondary: '#059669',
+            accent: '#34d399'
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.6s ease-in-out',
+            'slide-up': 'slideUp 0.5s ease-out',
+            'bounce-in': 'bounceIn 0.8s ease-out',
+            'glow': 'glow 2s ease-in-out infinite alternate',
+            'float': 'float 3s ease-in-out infinite',
+            'pulse-donation': 'pulseDonation 1.5s ease-in-out infinite'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes bounceIn {
+      0% {
+        transform: scale(0.3);
+        opacity: 0;
+      }
+      50% {
+        transform: scale(1.05);
+      }
+      70% {
+        transform: scale(0.9);
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes glow {
+      from {
+        box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+      }
+      to {
+        box-shadow: 0 0 30px rgba(16, 185, 129, 0.8);
+      }
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    @keyframes pulseDonation {
+      0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+      }
+      50% {
+        transform: scale(1.02);
+        box-shadow: 0 0 30px rgba(16, 185, 129, 0.6);
+      }
+    }
+
+    .gradient-bg {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+    }
+
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .donation-amount {
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .donation-amount:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .donation-amount.selected {
+      background: linear-gradient(135deg, #10b981, #059669);
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+    }
+
+    .text-gradient {
+      background: linear-gradient(45deg, #10b981, #34d399, #059669);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .donation-button {
+      background: linear-gradient(135deg, #10b981, #059669);
+      transition: all 0.3s ease;
+    }
+
+    .donation-button:hover {
+      background: linear-gradient(135deg, #059669, #047857);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+    }
+
+    .donation-button:disabled {
+      background: linear-gradient(135deg, #6b7280, #4b5563);
+      cursor: not-allowed;
+      transform: none;
+    }
+  </style>
+</head>
+<body class="bg-gray-900 text-white font-sans gradient-bg">
+
+  <!-- Header -->
+  <header class="bg-gray-900/90 backdrop-blur-sm shadow-lg sticky top-0 z-50 border-b border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-wrap items-center justify-between">
+      <div class="flex items-center gap-3">
+        <img src="/assets/communityIcon_j5nctdyq50rb1.jpg" alt="JEENEETards Logo" class="w-10 h-10 rounded-full border-2 border-primary" />
+        <span class="text-xl font-bold text-white">JEENEETards</span>
+      </div>
+
+      <!-- Hamburger Button -->
+      <button id="menu-toggle" class="md:hidden text-white focus:outline-none hover:text-primary transition-colors">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex gap-6 text-sm md:text-base">
+        <a href="index.html" class="hover:text-primary transition-colors duration-200">Home</a>
+        <a href="trending.html" class="hover:text-primary transition-colors duration-200">Trending</a>
+        <a href="study.html" class="hover:text-primary transition-colors duration-200">Study Material</a>
+        <a href="pomodoro.html" class="hover:text-primary transition-colors duration-200">Pomodoro</a>
+        <a href="about-us.html" class="hover:text-primary transition-colors duration-200">About Us</a>
+        <a href="donation.html" class="text-primary font-semibold border-b-2 border-primary pb-1">Donate</a>
+      </nav>
+
+      <a href="mod.html" class="hidden md:inline bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary px-4 py-2 rounded-lg text-sm text-white transition-all duration-300 shadow-lg hover:shadow-xl">
+        Mod Posts
+      </a>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="md:hidden px-4 pb-4 hidden border-t border-gray-800">
+      <nav class="flex flex-col space-y-3 pt-4">
+        <a href="index.html" class="hover:text-primary transition-colors">Home</a>
+        <a href="trending.html" class="hover:text-primary transition-colors">Trending</a>
+        <a href="study.html" class="hover:text-primary transition-colors">Study Material</a>
+        <a href="pomodoro.html" class="hover:text-primary transition-colors">Pomodoro</a>
+        <a href="about-us.html" class="hover:text-primary transition-colors">About Us</a>
+        <a href="donation.html" class="text-primary font-semibold">Donate</a>
+        <a href="mod.html" class="bg-gradient-to-r from-primary to-secondary px-4 py-2 rounded-lg text-white text-center transition-all">
+          Mod Posts
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container mx-auto px-6 py-8">
+
+    <!-- Hero Section -->
+    <div class="text-center mb-16 animate-fade-in">
+      <h1 class="text-5xl md:text-6xl font-bold mb-6">
+        <span class="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+          💝 Support JEENEETards
+        </span>
+      </h1>
+      <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+        Help us maintain and improve our platform for students preparing for JEE and NEET
+      </p>
+    </div>
+
+    <!-- Why Donate Section -->
+    <section class="mb-16 animate-slide-up">
+      <div class="bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm rounded-3xl p-8 border border-gray-700/50 card-hover">
+        <div class="flex items-center gap-4 mb-8">
+          <div class="w-16 h-16 bg-yellow-500/20 rounded-2xl flex items-center justify-center animate-float">
+            <span class="text-3xl">🎯</span>
+          </div>
+          <h2 class="text-3xl font-bold text-gradient">Why Your Support Matters</h2>
+        </div>
+        
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="bg-gray-700/30 rounded-2xl p-6 border border-gray-600/30">
+            <div class="text-4xl mb-4">🚀</div>
+            <h3 class="text-xl font-bold text-primary mb-3">Platform Development</h3>
+            <p class="text-gray-300">Keep our servers running, add new features, and maintain the best study experience for students.</p>
+          </div>
+          
+          <div class="bg-gray-700/30 rounded-2xl p-6 border border-gray-600/30">
+            <div class="text-4xl mb-4">📚</div>
+            <h3 class="text-xl font-bold text-secondary mb-3">Quality Content</h3>
+            <p class="text-gray-300">Fund creation of premium study materials, mock tests, and expert-curated resources.</p>
+          </div>
+          
+          <div class="bg-gray-700/30 rounded-2xl p-6 border border-gray-600/30">
+            <div class="text-4xl mb-4">🌟</div>
+            <h3 class="text-xl font-bold text-accent mb-3">Community Support</h3>
+            <p class="text-gray-300">Help us provide mentorship, doubt-solving sessions, and career guidance to students.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Donation Form -->
+    <section class="mb-16 animate-bounce-in">
+      <div class="bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm rounded-3xl p-8 border border-gray-700/50 card-hover max-w-4xl mx-auto">
+        <div class="flex items-center gap-4 mb-8">
+          <div class="w-16 h-16 bg-primary/20 rounded-2xl flex items-center justify-center animate-float">
+            <span class="text-3xl">💰</span>
+          </div>
+          <h2 class="text-3xl font-bold text-gradient">Make a Donation</h2>
+        </div>
+
+        <!-- Donor Information -->
+        <div class="grid md:grid-cols-2 gap-6 mb-8">
+          <div>
+            <label class="block text-lg font-semibold mb-3 text-primary">Your Name</label>
+            <input id="donorName" type="text" placeholder="Enter your name" 
+              class="w-full bg-gray-700 text-white px-4 py-3 rounded-xl border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary/50 transition-all duration-300" />
+          </div>
+          <div>
+            <label class="block text-lg font-semibold mb-3 text-secondary">Email Address</label>
+            <input id="donorEmail" type="email" placeholder="Enter your email" 
+              class="w-full bg-gray-700 text-white px-4 py-3 rounded-xl border border-gray-600 focus:border-secondary focus:ring-2 focus:ring-secondary/50 transition-all duration-300" />
+          </div>
+        </div>
+
+        <!-- Donation Amounts -->
+        <div class="mb-8">
+          <label class="block text-lg font-semibold mb-6 text-accent">Choose Donation Amount (Minimum ₹50)</label>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div class="donation-amount bg-gray-700/50 rounded-xl p-4 text-center border border-gray-600" data-amount="50">
+              <div class="text-2xl font-bold text-primary">₹50</div>
+              <div class="text-sm text-gray-400">Starter</div>
+            </div>
+            <div class="donation-amount bg-gray-700/50 rounded-xl p-4 text-center border border-gray-600" data-amount="100">
+              <div class="text-2xl font-bold text-secondary">₹100</div>
+              <div class="text-sm text-gray-400">Supporter</div>
+            </div>
+            <div class="donation-amount bg-gray-700/50 rounded-xl p-4 text-center border border-gray-600" data-amount="250">
+              <div class="text-2xl font-bold text-accent">₹250</div>
+              <div class="text-sm text-gray-400">Contributor</div>
+            </div>
+            <div class="donation-amount bg-gray-700/50 rounded-xl p-4 text-center border border-gray-600" data-amount="500">
+              <div class="text-2xl font-bold text-yellow-400">₹500</div>
+              <div class="text-sm text-gray-400">Champion</div>
+            </div>
+          </div>
+
+          <!-- Custom Amount -->
+          <div class="bg-gray-700/30 rounded-2xl p-6 border border-gray-600/30">
+            <label class="block text-lg font-semibold mb-3">Custom Amount (₹)</label>
+            <input id="customAmount" type="number" min="50" placeholder="Enter custom amount (min ₹50)" 
+              class="w-full bg-gray-600 text-white px-4 py-3 rounded-xl border border-gray-500 focus:border-primary focus:ring-2 focus:ring-primary/50 transition-all duration-300" />
+          </div>
+        </div>
+
+        <!-- Payment Message -->
+        <div class="mb-8">
+          <label class="block text-lg font-semibold mb-3">Message (Optional)</label>
+          <textarea id="donationMessage" rows="4" placeholder="Leave a message of support..." 
+            class="w-full bg-gray-700 text-white px-4 py-3 rounded-xl border border-gray-600 focus:border-accent focus:ring-2 focus:ring-accent/50 transition-all duration-300 resize-none"></textarea>
+        </div>
+
+        <!-- Donation Summary -->
+        <div class="bg-gradient-to-r from-primary/20 to-secondary/20 rounded-2xl p-6 border border-primary/30 mb-8">
+          <div class="flex justify-between items-center mb-4">
+            <span class="text-lg font-semibold">Donation Amount:</span>
+            <span id="donationSummary" class="text-2xl font-bold text-primary">₹0</span>
+          </div>
+          <div class="text-sm text-gray-300">
+            Your contribution helps thousands of students access quality educational resources.
+          </div>
+        </div>
+
+        <!-- Donate Button -->
+        <button id="donateBtn" class="donation-button w-full py-4 rounded-xl text-white font-bold text-xl transition-all duration-300 animate-pulse-donation" disabled>
+          💝 Donate Now via Razorpay
+        </button>
+
+        <!-- Security Notice -->
+        <div class="mt-6 text-center">
+          <p class="text-sm text-gray-400">
+            🔒 Your payment is secured by Razorpay. We don't store your payment information.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Thank You Section -->
+    <section class="text-center animate-slide-up">
+      <div class="bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-red-500/20 rounded-3xl p-8 border border-purple-500/30">
+        <h2 class="text-4xl font-bold mb-6">
+          <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+            Thank You for Your Support! 🙏
+          </span>
+        </h2>
+        <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+          Every contribution, no matter the size, makes a real difference in helping students achieve their dreams.
+        </p>
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="text-center">
+            <div class="text-3xl font-bold text-primary mb-2">50K+</div>
+            <div class="text-gray-300">Students Helped</div>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-secondary mb-2">10K+</div>
+            <div class="text-gray-300">Resources Available</div>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-accent mb-2">24/7</div>
+            <div class="text-gray-300">Platform Uptime</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-black/40 backdrop-blur-md mt-16 py-8 border-t border-gray-700/50">
+    <div class="container mx-auto px-6 text-center">
+      <p class="text-gray-400">© 2025 JEENEETards - Your trusted companion for competitive exam preparation</p>
+      <p class="text-gray-500 text-sm mt-2">Built by rebels, for rebels. 🔥</p>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    document.getElementById('menu-toggle').addEventListener('click', function() {
+      const mobileMenu = document.getElementById('mobile-menu');
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // Donation amount selection
+    let selectedAmount = 0;
+    const donationAmounts = document.querySelectorAll('.donation-amount');
+    const customAmountInput = document.getElementById('customAmount');
+    const donationSummary = document.getElementById('donationSummary');
+    const donateBtn = document.getElementById('donateBtn');
+
+    // Handle preset amount selection
+    donationAmounts.forEach(amount => {
+      amount.addEventListener('click', function() {
+        donationAmounts.forEach(a => a.classList.remove('selected'));
+        this.classList.add('selected');
+        selectedAmount = parseInt(this.dataset.amount);
+        customAmountInput.value = '';
+        updateDonationSummary();
+      });
+    });
+
+    // Handle custom amount input
+    customAmountInput.addEventListener('input', function() {
+      donationAmounts.forEach(a => a.classList.remove('selected'));
+      selectedAmount = parseInt(this.value) || 0;
+      updateDonationSummary();
+    });
+
+    function updateDonationSummary() {
+      donationSummary.textContent = `₹${selectedAmount}`;
+      donateBtn.disabled = selectedAmount < 50;
+      
+      if (selectedAmount >= 50) {
+        donateBtn.classList.add('animate-pulse-donation');
+      } else {
+        donateBtn.classList.remove('animate-pulse-donation');
+      }
+    }
+
+    // Razorpay Integration
+    donateBtn.addEventListener('click', function() {
+      if (selectedAmount < 50) {
+        alert('Minimum donation amount is ₹50');
+        return;
+      }
+
+      const donorName = document.getElementById('donorName').value || 'Anonymous';
+      const donorEmail = document.getElementById('donorEmail').value || '';
+      const message = document.getElementById('donationMessage').value || '';
+
+      // Razorpay options
+      const options = {
+        key: 'rzp_test_1234567890', // Replace with your Razorpay Test/Live Key ID
+        amount: selectedAmount * 100, // Amount in paise
+        currency: 'INR',
+        name: 'JEENEETards',
+        description: 'Support JEENEETards Platform',
+        image: '/assets/communityIcon_j5nctdyq50rb1.jpg',
+        handler: function(response) {
+          // Payment successful
+          showSuccessMessage(response.razorpay_payment_id);
+        },
+        prefill: {
+          name: donorName,
+          email: donorEmail,
+          contact: '' // Optional: Add contact field
+        },
+        notes: {
+          message: message,
+          donation_type: 'platform_support'
+        },
+        theme: {
+          color: '#10b981'
+        },
+        modal: {
+          ondismiss: function() {
+            console.log('Payment cancelled by user');
+          }
+        }
+      };
+
+      const razorpay = new Razorpay(options);
+      razorpay.open();
+    });
+
+    function showSuccessMessage(paymentId) {
+      // Create success modal
+      const modal = document.createElement('div');
+      modal.className = 'fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 animate-fade-in';
+      modal.innerHTML = `
+        <div class="bg-gray-800 rounded-3xl p-8 max-w-md mx-4 border border-gray-700 animate-bounce-in">
+          <div class="text-center">
+            <div class="text-6xl mb-4">🎉</div>
+            <h3 class="text-2xl font-bold text-primary mb-4">Thank You!</h3>
+            <p class="text-gray-300 mb-4">Your donation of ₹${selectedAmount} has been received successfully.</p>
+            <p class="text-sm text-gray-400 mb-6">Payment ID: ${paymentId}</p>
+            <button onclick="this.parentElement.parentElement.parentElement.remove()" 
+              class="bg-gradient-to-r from-primary to-secondary px-6 py-3 rounded-xl text-white font-semibold transition-all hover:scale-105">
+              Continue
+            </button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+
+      // Reset form
+      document.getElementById('donorName').value = '';
+      document.getElementById('donorEmail').value = '';
+      document.getElementById('donationMessage').value = '';
+      customAmountInput.value = '';
+      donationAmounts.forEach(a => a.classList.remove('selected'));
+      selectedAmount = 0;
+      updateDonationSummary();
+    }
+
+    // Add loading animation on page load
+    window.addEventListener('load', () => {
+      document.body.classList.add('animate-fade-in');
+    });
+
+    // Add intersection observer for scroll animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-slide-up');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('section').forEach(section => {
+      observer.observe(section);
+    });
+  </script>
+
+</body>
+</html>
