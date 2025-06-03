@@ -2,133 +2,404 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Trending</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CutOffs - JEENEETards</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#10b981',
+            secondary: '#059669',
+            accent: '#34d399'
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.6s ease-in-out',
+            'slide-up': 'slideUp 0.5s ease-out',
+            'bounce-in': 'bounceIn 0.8s ease-out',
+            'glow': 'glow 2s ease-in-out infinite alternate'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes bounceIn {
+      0% {
+        transform: scale(0.3);
+        opacity: 0;
+      }
+
+      50% {
+        transform: scale(1.05);
+      }
+
+      70% {
+        transform: scale(0.9);
+      }
+
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes glow {
+      from {
+        box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+      }
+
+      to {
+        box-shadow: 0 0 30px rgba(16, 185, 129, 0.8);
+      }
+    }
+
+    .gradient-bg {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+    }
+
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+  </style>
 </head>
 <body class="bg-gray-900 text-white font-sans">
 
-  <header class="bg-gray-900 sticky top-0 z-50 shadow-md">
-    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between px-4 py-5">
-      <a href="index.html" class="flex items-center gap-3">
-        <img src="/assets/communityIcon_j5nctdyq50rb1.jpg" alt="Logo" class="w-10 h-10 rounded-full">
+  <!-- Header -->
+  <header class="bg-gray-900 shadow-lg sticky top-0 z-50 border-b border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-wrap items-center justify-between">
+      <div class="flex items-center gap-3">
+        <img src="/assets/communityIcon_j5nctdyq50rb1.jpg" alt="JEENEETards Logo" class="w-10 h-10 rounded-full border-2 border-primary" />
         <span class="text-xl font-bold text-white">JEENEETards</span>
-      </a>
+      </div>
 
-      <nav class="flex flex-wrap gap-4 mt-4 md:mt-0 text-sm md:text-base">
-        <a href="index.html" class="hover:text-lime-300 hover:underline hover:font-semibold">Home</a>
-        <a href="trending.html" class="hover:text-lime-300 hover:underline hover:font-semibold">Trending</a>
-        <a href="pomodoro.html" class="hover:text-lime-300 hover:underline hover:font-semibold">Pomodoro</a>
-        <a href="cutoffs.html" class="hover:text-lime-300 hover:underline hover:font-semibold">Cutoffs</a>  
-        <a href="about-us.html" class="hover:text-lime-300 hover:underline hover:font-semibold">About Us</a>
+      <!-- Hamburger Button -->
+      <button id="menu-toggle" class="md:hidden text-white focus:outline-none hover:text-primary transition-colors">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex gap-6 text-sm md:text-base">
+        <a href="index.html" class="hover:text-primary transition-colors duration-200">Home</a>
+        <a href="trending.html" class="text-primary font-semibold border-b-2 border-primary pb-1">Trending</a>
+        <a href="pomodoro.html" class="hover:text-primary transition-colors duration-200">Pomodoro</a>
+        <a href="cutoffs.html" class="hover:text-primary transition-colors duration-200">Cutoffs</a>
+        <a href="about-us.html" class="hover:text-primary transition-colors duration-200">About Us</a>
       </nav>
 
-      <a href="/mod.html" class="mt-4 md:mt-0 bg-green-500 hover:bg-green-700 text-white text-sm px-4 py-2 rounded shadow transition duration-300">
-        Mod Appreciated Posts
+      <a href="mod.html" class="hidden md:inline bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary px-4 py-2 rounded-lg text-sm text-white transition-all duration-300 shadow-lg hover:shadow-xl">
+        Mod Posts
       </a>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="md:hidden px-4 pb-4 hidden border-t border-gray-800">
+      <nav class="flex flex-col space-y-3 pt-4">
+        <a href="index.html" class="hover:text-primary transition-colors">Home</a>
+        <a href="trending.html" class="text-primary font-semibold">Trending</a>
+        <a href="pomodoro.html" class="hover:text-primary transition-colors">Pomodoro</a>
+        <a href="cutoffs.html" class="hover:text-primary transition-colors">Cutoffs</a>
+        <a href="about-us.html" class="hover:text-primary transition-colors">About Us</a>
+        <a href="mod.html" class="bg-gradient-to-r from-primary to-secondary px-4 py-2 rounded-lg text-white text-center transition-all">
+          Mod Posts
+        </a>
+      </nav>
     </div>
   </header>
 
-    <main class="container mx-auto p-6">
-        <h1 class="text-3xl font-bold text-center text-blue-400 mb-6">📊 JEE Mains Dashboard</h1>
+  <!-- Main Content -->
+  <main class="container mx-auto px-6 py-8">
 
-        <div class="flex justify-center mb-6">
-            <label for="yearSelect" class="mr-3">Select Year:</label>
-            <select id="yearSelect" onchange="updateYearData()" class="text-black px-3 py-1 rounded">
-                <option value="2025">2025</option>
-                <option value="2024">2024</option>
-            </select>
+    <!-- Hero Section -->
+    <div class="text-center mb-12 animate-fade-in">
+      <h1 class="text-5xl md:text-6xl font-bold mb-4">
+        <span class="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+          📊 JEE Analytics Hub
+        </span>
+      </h1>
+      <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+        Comprehensive insights and statistics for JEE Main examinations
+      </p>
+    </div>
+
+    <!-- Year Selection -->
+    <div class="flex justify-center mb-8 animate-slide-up">
+      <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 border border-gray-700/50">
+        <label for="yearSelect" class="block text-lg font-semibold mb-3 text-primary">Select Examination Year:</label>
+        <select id="yearSelect" onchange="updateYearData()"
+          class="bg-gray-700 text-white px-6 py-3 rounded-xl border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary/50 transition-all duration-300 text-lg">
+          <option value="2025">📅 2025</option>
+          <option value="2024">📅 2024</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Statistics Cards -->
+    <section class="grid md:grid-cols-2 gap-8 mb-12">
+
+      <!-- Key Statistics Card -->
+      <div
+        class="bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm rounded-3xl p-8 border border-gray-700/50 card-hover animate-slide-up">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-12 h-12 bg-primary/20 rounded-xl flex items-center justify-center">
+            <span class="text-2xl">📈</span>
+          </div>
+          <h2 class="text-2xl font-bold text-primary">Key Statistics</h2>
         </div>
 
-        <section class="bg-gray-800 rounded-lg p-4 mb-6">
-            <h2 class="text-xl font-semibold text-center text-cyan-400 mb-2">Key Statistics</h2>
-            <div class="flex justify-around">
-                <div class="text-center">
-                    <p>Total Candidates Registered</p>
-                    <p id="registered" class="font-bold text-white text-lg">15,39,848</p>
-                </div>
-                <div class="text-center">
-                    <p>Total Candidates Appeared</p>
-                    <p id="appeared" class="font-bold text-white text-lg">14,75,103</p>
-                </div>
+        <div class="space-y-6">
+          <div class="bg-gray-700/30 rounded-2xl p-6 border border-gray-600/30">
+            <p class="text-gray-300 text-lg mb-2">Total Candidates Registered</p>
+            <p id="registered" class="text-4xl font-bold text-accent">15,39,848</p>
+            <div class="w-full bg-gray-600 rounded-full h-2 mt-3">
+              <div class="bg-accent h-2 rounded-full w-full"></div>
             </div>
-        </section>
+          </div>
 
-        <section class="bg-gray-800 rounded-lg p-4 mb-6">
-            <h2 class="text-xl font-semibold text-center text-cyan-400 mb-2">Cutoffs</h2>
-            <table class="w-full text-sm text-center">
-                <thead>
-                    <tr class="bg-gray-700">
-                        <th>Category</th>
-                        <th>Cutoff</th>
-                    </tr>
-                </thead>
-                <tbody id="cutoffTable">
-                    <tr><td>General</td><td>93.1023262</td></tr>
-                    <tr><td>EWS</td><td>80.3830119</td></tr>
-                    <tr><td>OBC</td><td>79.4313582</td></tr>
-                    <tr><td>SC</td><td>61.1526933</td></tr>
-                    <tr><td>ST</td><td>47.9026465</td></tr>
-                </tbody>
-            </table>
-        </section>
+          <div class="bg-gray-700/30 rounded-2xl p-6 border border-gray-600/30">
+            <p class="text-gray-300 text-lg mb-2">Total Candidates Appeared</p>
+            <p id="appeared" class="text-4xl font-bold text-secondary">14,75,103</p>
+            <div class="w-full bg-gray-600 rounded-full h-2 mt-3">
+              <div class="bg-secondary h-2 rounded-full" style="width: 95.8%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-    <script>
-        const dataByYear = {
-            2025: {
-                registered: "15,39,848",
-                appeared: "14,75,103",
-                cutoffs: [
-                    ["General", "93.1023262"],
-                    ["EWS", "80.3830119"],
-                    ["OBC", "79.4313582"],
-                    ["SC", "61.1526933"],
-                    ["ST", "47.9026465"]
-                ],
-                
-            },
-            2024: {
-                registered: "14,76,557",
-                appeared: "14,15,110",
-                cutoffs: [
-                    ["General", "93.2362181"],
-                    ["EWS", "81.3266412"],
-                    ["OBC", "79.6757881"],
-                    ["SC", "60.0923182"],
-                    ["ST", "46.697584"]
-                ],
-                
-            },
+      <!-- Attendance Rate Card -->
+      <div
+        class="bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm rounded-3xl p-8 border border-gray-700/50 card-hover animate-slide-up">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-12 h-12 bg-accent/20 rounded-xl flex items-center justify-center">
+            <span class="text-2xl">🎯</span>
+          </div>
+          <h2 class="text-2xl font-bold text-accent">Performance Metrics</h2>
+        </div>
+
+        <div class="space-y-6">
+          <div class="text-center">
+            <div class="relative w-32 h-32 mx-auto mb-4">
+              <svg class="w-32 h-32 transform -rotate-90" viewBox="0 0 36 36">
+                <path class="text-gray-600" stroke="currentColor" stroke-width="3" fill="none"
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                <path class="text-accent" stroke="currentColor" stroke-width="3" stroke-dasharray="95.8, 100"
+                  stroke-linecap="round" fill="none"
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+              </svg>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <span id="attendanceRate" class="text-2xl font-bold text-accent">95.8%</span>
+              </div>
+            </div>
+            <p class="text-gray-300 text-lg">Attendance Rate</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cutoffs Table -->
+    <section class="animate-bounce-in">
+      <div
+        class="bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm rounded-3xl p-8 border border-gray-700/50 card-hover">
+        <div class="flex items-center gap-3 mb-8">
+          <div class="w-12 h-12 bg-yellow-500/20 rounded-xl flex items-center justify-center">
+            <span class="text-2xl">🏅</span>
+          </div>
+          <h2 class="text-3xl font-bold bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
+            Category-wise Cutoffs</h2>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead>
+              <tr class="bg-gradient-to-r from-gray-700 to-gray-600 rounded-t-xl">
+                <th class="px-6 py-4 text-left text-lg font-semibold text-white rounded-tl-xl">Category</th>
+                <th class="px-6 py-4 text-left text-lg font-semibold text-white rounded-tr-xl">Qualifying Marks</th>
+              </tr>
+            </thead>
+            <tbody id="cutoffTable" class="divide-y divide-gray-600/50">
+              <tr class="hover:bg-gray-700/30 transition-colors duration-300">
+                <td class="px-6 py-4 font-medium text-yellow-300">🏆 General</td>
+                <td class="px-6 py-4 text-2xl font-bold text-yellow-400">93.1023262</td>
+              </tr>
+              <tr class="hover:bg-gray-700/30 transition-colors duration-300">
+                <td class="px-6 py-4 font-medium text-blue-300">💼 EWS</td>
+                <td class="px-6 py-4 text-2xl font-bold text-blue-400">80.3830119</td>
+              </tr>
+              <tr class="hover:bg-gray-700/30 transition-colors duration-300">
+                <td class="px-6 py-4 font-medium text-green-300">🎓 OBC</td>
+                <td class="px-6 py-4 text-2xl font-bold text-green-400">79.4313582</td>
+              </tr>
+              <tr class="hover:bg-gray-700/30 transition-colors duration-300">
+                <td class="px-6 py-4 font-medium text-purple-300">📚 SC</td>
+                <td class="px-6 py-4 text-2xl font-bold text-purple-400">61.1526933</td>
+              </tr>
+              <tr class="hover:bg-gray-700/30 transition-colors duration-300">
+                <td class="px-6 py-4 font-medium text-pink-300">🌟 ST</td>
+                <td class="px-6 py-4 text-2xl font-bold text-pink-400">47.9026465</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Additional Info Cards -->
+    <section class="grid md:grid-cols-3 gap-6 mt-12">
+      <div class="bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl p-6 border border-primary/30 text-center">
+        <div class="text-4xl mb-3">🎯</div>
+        <h3 class="text-lg font-semibold mb-2">Success Rate</h3>
+        <p class="text-2xl font-bold text-primary" id="successRate">12.8%</p>
+      </div>
+
+      <div
+        class="bg-gradient-to-br from-secondary/20 to-secondary/5 rounded-2xl p-6 border border-secondary/30 text-center">
+        <div class="text-4xl mb-3">📊</div>
+        <h3 class="text-lg font-semibold mb-2">Average Score</h3>
+        <p class="text-2xl font-bold text-secondary" id="avgScore">65.2</p>
+      </div>
+
+      <div class="bg-gradient-to-br from-accent/20 to-accent/5 rounded-2xl p-6 border border-accent/30 text-center">
+        <div class="text-4xl mb-3">🏆</div>
+        <h3 class="text-lg font-semibold mb-2">Top Score</h3>
+        <p class="text-2xl font-bold text-accent" id="topScore">300</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-black/40 backdrop-blur-md mt-16 py-8 border-t border-gray-700/50">
+    <div class="container mx-auto px-6 text-center">
+      <p class="text-gray-400">© 2025 JEENEETards - Your trusted companion for competitive exam preparation</p>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    document.getElementById('menu-toggle').addEventListener('click', function() {
+      const mobileMenu = document.getElementById('mobile-menu');
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    const dataByYear = {
+      2025: {
+        registered: "15,39,848",
+        appeared: "14,75,103",
+        attendanceRate: "95.8%",
+        successRate: "12.8%",
+        avgScore: "65.2",
+        topScore: "300",
+        cutoffs: [
+          ["🏆 General", "93.1023262", "text-yellow-400"],
+          ["💼 EWS", "80.3830119", "text-blue-400"],
+          ["🎓 OBC", "79.4313582", "text-green-400"],
+          ["📚 SC", "61.1526933", "text-purple-400"],
+          ["🌟 ST", "47.9026465", "text-pink-400"]
+        ]
+      },
+      2024: {
+        registered: "14,76,557",
+        appeared: "14,15,110",
+        attendanceRate: "95.9%",
+        successRate: "13.1%",
+        avgScore: "66.8",
+        topScore: "300",
+        cutoffs: [
+          ["🏆 General", "93.2362181", "text-yellow-400"],
+          ["💼 EWS", "81.3266412", "text-blue-400"],
+          ["🎓 OBC", "79.6757881", "text-green-400"],
+          ["📚 SC", "60.0923182", "text-purple-400"],
+          ["🌟 ST", "46.697584", "text-pink-400"]
+        ]
+      }
+    };
+
+    function updateYearData() {
+      const year = document.getElementById("yearSelect").value;
+      const data = dataByYear[year];
+
+      // Update statistics
+      document.getElementById("registered").textContent = data.registered;
+      document.getElementById("appeared").textContent = data.appeared;
+      document.getElementById("attendanceRate").textContent = data.attendanceRate;
+      document.getElementById("successRate").textContent = data.successRate;
+      document.getElementById("avgScore").textContent = data.avgScore;
+      document.getElementById("topScore").textContent = data.topScore;
+
+      // Update cutoffs table
+      const cutoffTable = document.getElementById("cutoffTable");
+      cutoffTable.innerHTML = "";
+      data.cutoffs.forEach(([category, cutoff, colorClass]) => {
+        const categoryText = category.split(' ').slice(1).join(' ');
+        const emoji = category.split(' ')[0];
+        cutoffTable.innerHTML += `
+          <tr class="hover:bg-gray-700/30 transition-colors duration-300">
+            <td class="px-6 py-4 font-medium text-${categoryText === 'General' ? 'yellow' : categoryText === 'EWS' ? 'blue' : categoryText === 'OBC' ? 'green' : categoryText === 'SC' ? 'purple' : 'pink'}-300">${category}</td>
+            <td class="px-6 py-4 text-2xl font-bold ${colorClass}">${cutoff}</td>
+          </tr>
+        `;
+      });
+
+      // Add animation to updated elements
+      document.getElementById("registered").classList.add("animate-bounce-in");
+      document.getElementById("appeared").classList.add("animate-bounce-in");
+      setTimeout(() => {
+        document.getElementById("registered").classList.remove("animate-bounce-in");
+        document.getElementById("appeared").classList.remove("animate-bounce-in");
+      }, 800);
+    }
+
+    // Add loading animation on page load
+    window.addEventListener('load', () => {
+      document.body.classList.add('animate-fade-in');
+    });
+
+    // Add intersection observer for scroll animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-slide-up');
         }
+      });
+    }, observerOptions);
 
-        function updateYearData() {
-            const year = document.getElementById("yearSelect").value;
-            const data = dataByYear[year];
-
-            document.getElementById("registered").textContent = data.registered;
-            document.getElementById("appeared").textContent = data.appeared;
-
-            const cutoffTable = document.getElementById("cutoffTable");
-            cutoffTable.innerHTML = "";
-            data.cutoffs.forEach(row => {
-                cutoffTable.innerHTML += `<tr><td>${row[0]}</td><td>${row[1]}</td></tr>`;
-            });
-
-            updateMarksTable();
-        }
-
-        function updateMarksTable() {
-            const year = document.getElementById("yearSelect").value;
-            const exam = document.getElementById("examSelect").value;
-            const data = dataByYear[year].marks[exam];
-
-            const marksTable = document.getElementById("marksTable");
-            marksTable.innerHTML = "";
-            data.forEach(row => {
-                marksTable.innerHTML += `<tr><td>${row[0]}</td><td>${row[1]}</td></tr>`;
-            });
-        }
-    </script>
+    document.querySelectorAll('section').forEach(section => {
+      observer.observe(section);
+    });
+  </script>
 </body>
-
 </html>
