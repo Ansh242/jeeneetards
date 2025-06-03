@@ -1,13 +1,29 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>JEENEETards</title>
-  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <title>JEENEETards - Your Ultimate JEE & NEET Companion</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#10b981',
+            secondary: '#059669',
+            accent: '#34d399'
+          }
+        }
+      }
+    }
+  </script>
   <script>
     function updateCountdown(id, examDate) {
       const el = document.getElementById(id);
+      if (!el) return;
+      
       const targetDate = new Date(examDate);
       if (isNaN(targetDate)) {
         el.innerText = "TBA";
@@ -20,131 +36,403 @@
       const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-      const milliseconds = distance % 1000;
-      el.innerText = distance > 0
-        ? `${days}d ${hours}h ${minutes}m ${seconds}s ${milliseconds}ms`
-        : "It's Today!";
+      
+      if (distance > 0) {
+        el.innerHTML = `
+          <div class="grid grid-cols-4 gap-2 text-center">
+            <div class="bg-gray-800 p-2 rounded">
+              <div class="text-2xl font-bold text-primary">${days}</div>
+              <div class="text-xs text-gray-400">Days</div>
+            </div>
+            <div class="bg-gray-800 p-2 rounded">
+              <div class="text-2xl font-bold text-primary">${hours}</div>
+              <div class="text-xs text-gray-400">Hours</div>
+            </div>
+            <div class="bg-gray-800 p-2 rounded">
+              <div class="text-2xl font-bold text-primary">${minutes}</div>
+              <div class="text-xs text-gray-400">Minutes</div>
+            </div>
+            <div class="bg-gray-800 p-2 rounded">
+              <div class="text-2xl font-bold text-primary">${seconds}</div>
+              <div class="text-xs text-gray-400">Seconds</div>
+            </div>
+          </div>
+        `;
+      } else {
+        el.innerHTML = `<div class="text-2xl font-bold text-accent animate-pulse">It's Today! 🎉</div>`;
+      }
     }
 
     function fetchSubredditStats() {
+      const statsEl = document.getElementById("subreddit-stats");
+      if (!statsEl) return;
+      
       fetch("https://www.reddit.com/r/JEENEETards/about.json")
         .then(res => res.json())
         .then(data => {
           const members = data.data.subscribers.toLocaleString();
           const online = data.data.accounts_active.toLocaleString();
-          document.getElementById("subreddit-stats").innerText = `👥 ${members} members • 🟢 ${online} online`;
+          statsEl.innerHTML = `
+            <div class="flex items-center gap-4 text-sm">
+              <span class="flex items-center gap-1">
+                <span class="text-primary">👥</span> ${members} members
+              </span>
+              <span class="flex items-center gap-1">
+                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span> ${online} online
+              </span>
+            </div>
+          `;
         })
         .catch(() => {
-          document.getElementById("subreddit-stats").innerText = "Failed to load stats.";
+          statsEl.innerText = "Community stats unavailable";
         });
     }
 
     document.addEventListener("DOMContentLoaded", () => {
+      // Update countdowns
       setInterval(() => {
-        updateCountdown('jee-main', '2026-01-22T00:00:00');
-        updateCountdown('jee-adv', '2026-05-25T00:00:00');
-        updateCountdown('neet', 'TBA');
-      }, 50);
+        updateCountdown('jee-main', '2026-04-06T00:00:00');
+        updateCountdown('jee-adv', '2025-05-25T00:00:00');
+        updateCountdown('neet', '2025-05-05T00:00:00');
+      }, 1000);
+      
+      // Fetch subreddit stats
       fetchSubredditStats();
-      setInterval(fetchSubredditStats, 1000);
+      setInterval(fetchSubredditStats, 30000);
+
+      // Mobile menu toggle
+      const menuToggle = document.getElementById("menu-toggle");
+      const mobileMenu = document.getElementById("mobile-menu");
+
+      if (menuToggle && mobileMenu) {
+        menuToggle.addEventListener("click", () => {
+          mobileMenu.classList.toggle("hidden");
+        });
+      }
+
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
     });
   </script>
 </head>
 <body class="bg-gray-900 text-white font-sans">
 
-  <header class="bg-gray-900 shadow-md sticky top-0 z-50">
+  <!-- Header -->
+  <header class="bg-gray-900 shadow-lg sticky top-0 z-50 border-b border-gray-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-wrap items-center justify-between">
       <div class="flex items-center gap-3">
-        <img src="/assets/communityIcon_j5nctdyq50rb1.jpg" alt="Logo" class="w-10 h-10 rounded-full" />
+        <div class="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center">
+          <span class="text-white font-bold text-lg">J</span>
+        </div>
         <span class="text-xl font-bold text-white">JEENEETards</span>
       </div>
+
       <!-- Hamburger Button -->
-      <button id="menu-toggle" class="md:hidden text-white focus:outline-none">
+      <button id="menu-toggle" class="md:hidden text-white focus:outline-none hover:text-primary transition-colors">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M4 6h16M4 12h16M4 18h16" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
-      </button>     
-      <nav class="hidden md:flex gap-4 text-sm md:text-base">
-        <a href="index.html" class="hover:font-semibold hover:underline hover:text-lime-300">Home</a>
-        <a href="trending.html" class="hover:font-semibold hover:underline hover:text-lime-300">Trending</a>
-        <a href="pomodoro.html" class="hover:font-semibold hover:underline hover:text-lime-300">Pomodoro</a>
-        <a href="cutoffs.html" class="hover:font-semibold hover:underline hover:text-lime-300">Cutoffs</a>  
-        <a href="about-us.html" class="hover:font-semibold hover:underline hover:text-lime-300">About Us</a>
+      </button>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex gap-6 text-sm md:text-base">
+        <a href="#home" class="hover:text-primary transition-colors duration-200">Home</a>
+        <a href="#countdowns" class="hover:text-primary transition-colors duration-200">Exam Timers</a>
+        <a href="#resources" class="hover:text-primary transition-colors duration-200">Resources</a>
+        <a href="#community" class="hover:text-primary transition-colors duration-200">Community</a>
+        <a href="#about" class="hover:text-primary transition-colors duration-200">About</a>
       </nav>
-      <a href="/mod.html" class="hidden md:inline mt-4 md:mt-0 bg-green-500 hover:bg-green-800 px-4 py-2 rounded text-sm text-white">Mod Appreciated Posts</a>
-    </div>
 
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="md:hidden px-4 pb-4 hidden">
-      <nav class="flex flex-col space-y-2 text-sm">
-        <a href="index.html" class="hover:font-semibold hover:underline hover:text-lime-300">Home</a>
-        <a href="trending.html" class="hover:font-semibold hover:underline hover:text-lime-300">Trending</a>
-        <a href="pomodoro.html" class="hover:font-semibold hover:underline hover:text-lime-300">Pomodoro</a>
-        <a href="cutoffs.html" class="hover:font-semibold hover:underline hover:text-lime-300">Cutoffs</a>
-        <a href="about-us.html" class="hover:font-semibold hover:underline hover:text-lime-300">About Us</a>
-        <a href="/mod.html" class="bg-green-500 hover:bg-green-800 px-3 py-2 rounded text-white text-center">Mod Appreciated Posts</a>
-      </nav>
-    </div>
-  </header>
-  
-
-  <main class="px-4 py-10 max-w-7xl mx-auto space-y-12">
-    
-    <section class="text-center space-y-8">
-      <h2 class="text-3xl font-bold">📅 Exam Countdown</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="bg-gray-800 p-6 rounded-xl shadow-lg">
-          <p class="text-lg font-semibold">JEE Main**</p>
-          <p id="jee-main" class="text-lime-400 text-xl mt-2">Loading...</p>
-        </div>
-        <div class="bg-gray-800 p-6 rounded-xl shadow-lg">
-          <p class="text-lg font-semibold">JEE Advanced**</p>
-          <p id="jee-adv" class="text-lime-400 text-xl mt-2">Loading...</p>
-        </div>
-        <div class="bg-gray-800 p-6 rounded-xl shadow-lg">
-          <p class="text-lg font-semibold">NEET</p>
-          <p id="neet" class="text-lime-400 text-xl mt-2">Loading...</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Sidebar / Trending & Categories -->
-    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-      <div class="bg-gray-800 p-6 rounded-xl">
-        <h3 class="text-xl font-semibold text-lime-400">🔥 Trending</h3>
-        <ul class="mt-4 text-sm text-gray-300 space-y-2">
-          <li>• NEET topper reveals he never touched NCRT</li>
-          <li>• "Drop year is therapy" hits 5k upvotes</li>
-          <li>• Coaching teacher caught vibing to KR$NA</li>
-        </ul>
-      </div>
-
-      <div class="bg-gray-800 p-6 rounded-xl">
-        <h3 class="text-xl font-semibold text-lime-400">🧠 Brainrot Categories</h3>
-        <ul class="mt-4 text-sm text-gray-300 space-y-2">
-          <li><a href="https://www.reddit.com/r/JEENEETards/?f=flair_name%3A%22Meme%20%3Asnoo_trollface%3A%22" class="hover:text-lime-300">IIT Memes</a></li>
-          <li><a href="#" class="hover:text-lime-300">Dropper Life</a></li>
-          <li><a href="#" class="hover:text-lime-300">Coaching Horror</a></li>
-          <li><a href="https://www.reddit.com/r/JEENEETards/?f=flair_name%3A%22Rant%20%3Asnoo_feelsbadman%3A%22" class="hover:text-lime-300">Post Exam Depression</a></li>
-        </ul>
-      </div>
-    </section>
-
-    <div class="text-center mt-12 space-y-4">
-      <div id="subreddit-stats" class="text-2xl text-gray-400">
-        Fetching stats...
-      </div>
-      <a href="https://www.reddit.com/r/JEENEETards" target="_blank" class="inline-flex items-center px-5 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-full font-semibold transition shadow-md">
-        <img src="https://www.redditstatic.com/desktop2x/img/favicon/apple-icon-57x57.png" alt="" class="w-5 h-5 mr-2" />
+      <a href="#community" class="hidden md:inline bg-primary hover:bg-secondary px-4 py-2 rounded-lg text-sm text-white transition-colors duration-200">
         Join Community
       </a>
     </div>
 
-  </main>
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="md:hidden px-4 pb-4 hidden border-t border-gray-800">
+      <nav class="flex flex-col space-y-3 pt-4">
+        <a href="#home" class="hover:text-primary transition-colors">Home</a>
+        <a href="#countdowns" class="hover:text-primary transition-colors">Exam Timers</a>
+        <a href="#resources" class="hover:text-primary transition-colors">Resources</a>
+        <a href="#community" class="hover:text-primary transition-colors">Community</a>
+        <a href="#about" class="hover:text-primary transition-colors">About</a>
+        <a href="#community" class="bg-primary hover:bg-secondary px-4 py-2 rounded-lg text-white text-center transition-colors">
+          Join Community
+        </a>
+      </nav>
+    </div>
+  </header>
 
-  <footer class="bg-gray-800 py-6 mt-12 text-center text-sm text-gray-500">
-    © 2025 r/jeeneetards. Braincells not guaranteed.
+  <!-- Hero Section -->
+  <section id="home" class="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h1 class="text-4xl md:text-6xl font-bold mb-6">
+        Your Ultimate <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">JEE & NEET</span> Companion
+      </h1>
+      <p class="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
+        Join thousands of aspiring engineers and doctors. Track exam countdowns, access quality resources, and connect with a supportive community.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="#countdowns" class="bg-primary hover:bg-secondary px-8 py-3 rounded-lg text-white font-semibold transition-colors">
+          View Exam Timers
+        </a>
+        <a href="#community" class="border border-primary text-primary hover:bg-primary hover:text-white px-8 py-3 rounded-lg font-semibold transition-colors">
+          Join Community
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Exam Countdowns -->
+  <section id="countdowns" class="py-16 bg-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">Exam Countdowns</span>
+      </h2>
+      
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- JEE Main -->
+        <div class="bg-gray-900 p-6 rounded-xl border border-gray-700 hover:border-primary transition-colors">
+          <div class="text-center mb-4">
+            <h3 class="text-2xl font-bold text-primary">JEE Main 2025</h3>
+            <p class="text-gray-400">Session 1</p>
+          </div>
+          <div id="jee-main" class="mb-4"></div>
+          <div class="text-center">
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary bg-opacity-20 text-primary">
+              April 6, 2025
+            </span>
+          </div>
+        </div>
+
+        <!-- JEE Advanced -->
+        <div class="bg-gray-900 p-6 rounded-xl border border-gray-700 hover:border-primary transition-colors">
+          <div class="text-center mb-4">
+            <h3 class="text-2xl font-bold text-primary">JEE Advanced 2025</h3>
+            <p class="text-gray-400">IIT Entrance</p>
+          </div>
+          <div id="jee-adv" class="mb-4"></div>
+          <div class="text-center">
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary bg-opacity-20 text-primary">
+              May 25, 2025
+            </span>
+          </div>
+        </div>
+
+        <!-- NEET -->
+        <div class="bg-gray-900 p-6 rounded-xl border border-gray-700 hover:border-primary transition-colors">
+          <div class="text-center mb-4">
+            <h3 class="text-2xl font-bold text-primary">NEET 2025</h3>
+            <p class="text-gray-400">Medical Entrance</p>
+          </div>
+          <div id="neet" class="mb-4"></div>
+          <div class="text-center">
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary bg-opacity-20 text-primary">
+              May 5, 2025
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Resources Section -->
+  <section id="resources" class="py-16 bg-gray-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">
+        Study <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">Resources</span>
+      </h2>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 hover:border-primary transition-colors text-center">
+          <div class="text-4xl mb-4">📚</div>
+          <h3 class="text-xl font-semibold mb-2 text-primary">Study Materials</h3>
+          <p class="text-gray-400">Comprehensive notes and question banks</p>
+        </div>
+        
+        <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 hover:border-primary transition-colors text-center">
+          <div class="text-4xl mb-4">🍅</div>
+          <h3 class="text-xl font-semibold mb-2 text-primary">Pomodoro Timer</h3>
+          <p class="text-gray-400">Boost productivity with timed study sessions</p>
+        </div>
+        
+        <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 hover:border-primary transition-colors text-center">
+          <div class="text-4xl mb-4">📊</div>
+          <h3 class="text-xl font-semibold mb-2 text-primary">Cutoff Analysis</h3>
+          <p class="text-gray-400">Previous year cutoffs and predictions</p>
+        </div>
+        
+        <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 hover:border-primary transition-colors text-center">
+          <div class="text-4xl mb-4">🔥</div>
+          <h3 class="text-xl font-semibold mb-2 text-primary">Trending Posts</h3>
+          <p class="text-gray-400">Latest discussions and updates</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Community Section -->
+  <section id="community" class="py-16 bg-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">
+          Join Our <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">Community</span>
+        </h2>
+        <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+          Connect with fellow JEE and NEET aspirants. Share experiences, get help, and stay motivated together.
+        </p>
+      </div>
+      
+      <div class="bg-gray-900 p-8 rounded-xl border border-gray-700 text-center max-w-2xl mx-auto">
+        <div class="text-6xl mb-4">🎯</div>
+        <h3 class="text-2xl font-bold mb-4 text-primary">r/JEENEETards</h3>
+        <div id="subreddit-stats" class="mb-6 text-gray-300"></div>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="https://reddit.com/r/JEENEETards" target="_blank" rel="noopener" 
+             class="bg-primary hover:bg-secondary px-6 py-3 rounded-lg text-white font-semibold transition-colors">
+            Visit Subreddit
+          </a>
+          <a href="https://discord.gg/jeeneetards" target="_blank" rel="noopener"
+             class="border border-primary text-primary hover:bg-primary hover:text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+            Join Discord
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Links -->
+  <section class="py-16 bg-gray-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-bold text-center mb-12">Quick Access</h2>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <a href="/pomodoro.html" class="block bg-gray-800 hover:bg-gray-700 p-6 rounded-xl border border-gray-700 hover:border-primary transition-colors">
+          <div class="flex items-center gap-4">
+            <div class="text-3xl">🍅</div>
+            <div>
+              <h3 class="text-xl font-semibold text-primary">Pomodoro Timer</h3>
+              <p class="text-gray-400">25-minute focused study sessions</p>
+            </div>
+          </div>
+        </a>
+        
+        <a href="/cutoffs.html" class="block bg-gray-800 hover:bg-gray-700 p-6 rounded-xl border border-gray-700 hover:border-primary transition-colors">
+          <div class="flex items-center gap-4">
+            <div class="text-3xl">📊</div>
+            <div>
+              <h3 class="text-xl font-semibold text-primary">Cutoff Tracker</h3>
+              <p class="text-gray-400">Previous years and predictions</p>
+            </div>
+          </div>
+        </a>
+        
+        <a href="/trending.html" class="block bg-gray-800 hover:bg-gray-700 p-6 rounded-xl border border-gray-700 hover:border-primary transition-colors">
+          <div class="flex items-center gap-4">
+            <div class="text-3xl">🔥</div>
+            <div>
+              <h3 class="text-xl font-semibold text-primary">Trending Posts</h3>
+              <p class="text-gray-400">Hot discussions and updates</p>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="py-16 bg-gray-800">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold mb-8">
+        About <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">JEENEETards</span>
+      </h2>
+      <p class="text-xl text-gray-300 mb-8 leading-relaxed">
+        JEENEETards is more than just a website—it's a community of dedicated students preparing for India's most competitive exams. 
+        We provide tools, resources, and a supportive environment to help you succeed in your JEE and NEET journey.
+      </p>
+      <div class="grid md:grid-cols-3 gap-8 mt-12">
+        <div class="text-center">
+          <div class="text-4xl font-bold text-primary mb-2">50K+</div>
+          <div class="text-gray-400">Active Members</div>
+        </div>
+        <div class="text-center">
+          <div class="text-4xl font-bold text-primary mb-2">24/7</div>
+          <div class="text-gray-400">Community Support</div>
+        </div>
+        <div class="text-center">
+          <div class="text-4xl font-bold text-primary mb-2">100%</div>
+          <div class="text-gray-400">Free Resources</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 border-t border-gray-800 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-4 gap-8">
+        <div class="col-span-2">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center">
+              <span class="text-white font-bold">J</span>
+            </div>
+            <span class="text-lg font-bold">JEENEETards</span>
+          </div>
+          <p class="text-gray-400 mb-4">
+            Your ultimate companion for JEE and NEET preparation. Join our community and achieve your dreams.
+          </p>
+          <div class="flex gap-4">
+            <a href="https://reddit.com/r/JEENEETards" target="_blank" class="text-gray-400 hover:text-primary transition-colors">
+              <span class="sr-only">Reddit</span>
+              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+              </svg>
+            </a>
+            <a href="https://discord.gg/jeeneetards" target="_blank" class="text-gray-400 hover:text-primary transition-colors">
+              <span class="sr-only">Discord</span>
+              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419-.0190 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1568 2.4189Z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-semibold mb-4 text-primary">Quick Links</h3>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="#home" class="hover:text-white transition-colors">Home</a></li>
+            <li><a href="#countdowns" class="hover:text-white transition-colors">Exam Timers</a></li>
+            <li><a href="#resources" class="hover:text-white transition-colors">Resources</a></li>
+            <li><a href="#community" class="hover:text-white transition-colors">Community</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-semibold mb-4 text-primary">Tools</h3>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="/pomodoro.html" class="hover:text-white transition-colors">Pomodoro Timer</a></li>
+            <li><a href="/cutoffs.html" class="hover:text-white transition-colors">Cutoff Analysis</a></li>
+            <li><a href="/trending.html" class="hover:text-white transition-colors">Trending Posts</a></li>
+            <li><a href="/mod.html" class="hover:text-white transition-colors">Mod Posts</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+        <p>&copy; 2024 JEENEETards. Made with ❤️ for aspiring engineers and doctors.</p>
+      </div>
+    </div>
   </footer>
 
 </body>
