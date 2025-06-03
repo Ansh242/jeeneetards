@@ -1,61 +1,424 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Study Material</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Study Materials - JEENEETards</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#10b981',
+            secondary: '#059669',
+            accent: '#34d399'
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.6s ease-in-out',
+            'slide-up': 'slideUp 0.5s ease-out',
+            'bounce-in': 'bounceIn 0.8s ease-out',
+            'float': 'float 3s ease-in-out infinite',
+            'glow': 'glow 2s ease-in-out infinite alternate'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes bounceIn {
+      0% {
+        transform: scale(0.3);
+        opacity: 0;
+      }
+      50% {
+        transform: scale(1.05);
+      }
+      70% {
+        transform: scale(0.9);
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes glow {
+      from {
+        box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+      }
+      to {
+        box-shadow: 0 0 30px rgba(16, 185, 129, 0.8);
+      }
+    }
+
+    .gradient-bg {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+    }
+
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .resource-card {
+      background: linear-gradient(135deg, rgba(55, 65, 81, 0.8) 0%, rgba(31, 41, 55, 0.8) 100%);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(75, 85, 99, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .resource-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+      border-color: rgba(16, 185, 129, 0.5);
+    }
+
+    .subject-tab {
+      transition: all 0.3s ease;
+    }
+
+    .subject-tab.active {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+    }
+  </style>
 </head>
-<body>
+<body class="bg-gray-900 text-white font-sans gradient-bg">
 
-    <header class="text-gray-400 bg-gray-900 body-font">
-  <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-    <a class="flex title-font font-medium items-center text-white mb-4 md:mb-0">
-      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="0" class="w-10 h-10 text-white p-2 bg-transparent-500 rounded-full" viewBox="0 0 24 24" style="--darkreader-inline-stroke: currentColor;" data-darkreader-inline-stroke="">
-     <image href="/assets/communityIcon_j5nctdyq50rb1.jpg" x="2" y="2" width="20" height="20" />
-        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-      </svg>
-      <span class="ml-3 text-xl">JEENEETards</span>
-    </a>
-    <nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-700	flex flex-wrap items-center text-base justify-center">
-      <a href="index.html" class="mr-5 hover:text-white">Home</a>
-      <a href="trending.html" class="mr-5 hover:text-white">Trending</a>
-      <a href="about-us.html" class="mr-5 hover:text-white">About Us</a>
-      <a href="study.html" class="mr-5 hover:text-white">Study Material</a>
-    </nav>
-     
-    <a href="/mod.html" class="inline-flex items-center bg-gray-800 border-0 py-1 px-3 focus:outline-none hover:bg-gray-700 rounded text-base mt-4 md:mt-0 text-white">Apply for Moderation</a>
-      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24" style="--darkreader-inline-stroke: currentColor;" data-darkreader-inline-stroke="">
-        <path d="M5 12h14M12 5l7 7-7 7"></path>
-      </svg>
-    </button>
-  </div>
-</header>
+  <!-- Header -->
+  <header class="bg-gray-900/90 backdrop-blur-sm shadow-lg sticky top-0 z-50 border-b border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-wrap items-center justify-between">
+      <div class="flex items-center gap-3">
+        <img src="/assets/communityIcon_j5nctdyq50rb1.jpg" alt="JEENEETards Logo" class="w-10 h-10 rounded-full border-2 border-primary" />
+        <span class="text-xl font-bold text-white">JEENEETards</span>
+      </div>
 
-<article
-  class="w-72 bg-gray-700 shadow p-4 space-y-2 rounded-md hover:-translate-y-2 duration-300"
->
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    height="24"
-    width="24"
-    xmlns="http://www.w3.org/2000/svg"
-    aria-hidden="true"
-    class="w-10 h-10 text-gray-300 bg-gray-600 rounded-full p-1"
-  >
-    <path
-      d="m8.032 12 1.984 1.984 4.96-4.96m4.55 5.272.893-.893a1.984 1.984 0 0 0 0-2.806l-.893-.893a1.984 1.984 0 0 1-.581-1.403V7.04a1.984 1.984 0 0 0-1.984-1.984h-1.262a1.983 1.983 0 0 1-1.403-.581l-.893-.893a1.984 1.984 0 0 0-2.806 0l-.893.893a1.984 1.984 0 0 1-1.403.581H7.04A1.984 1.984 0 0 0 5.055 7.04v1.262c0 .527-.209 1.031-.581 1.403l-.893.893a1.984 1.984 0 0 0 0 2.806l.893.893c.372.372.581.876.581 1.403v1.262a1.984 1.984 0 0 0 1.984 1.984h1.262c.527 0 1.031.209 1.403.581l.893.893a1.984 1.984 0 0 0 2.806 0l.893-.893a1.985 1.985 0 0 1 1.403-.581h1.262a1.984 1.984 0 0 0 1.984-1.984V15.7c0-.527.209-1.031.581-1.403Z"
-      stroke-width="2"
-      stroke-linejoin="round"
-      stroke-linecap="round"
-      stroke="currentColor"
-    ></path>
-  </svg>
-  <p class="text-sm w-full text-gray-400">
-    COMING SOON!!
-  </p>
-</article>
+      <!-- Hamburger Button -->
+      <button id="menu-toggle" class="md:hidden text-white focus:outline-none hover:text-primary transition-colors">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex gap-6 text-sm md:text-base">
+        <a href="index.html" class="hover:text-primary transition-colors duration-200">Home</a>
+        <a href="trending.html" class="hover:text-primary transition-colors duration-200">Trending</a>
+        <a href="pomodoro.html" class="hover:text-primary transition-colors duration-200">Pomodoro</a>
+        <a href="cutoffs.html" class="hover:text-primary transition-colors duration-200">Cutoffs</a>
+        <a href="about-us.html" class="hover:text-primary transition-colors duration-200">About Us</a>
+      </nav>
+
+      <a href="mod.html" class="hidden md:inline bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary px-4 py-2 rounded-lg text-sm text-white transition-all duration-300 shadow-lg hover:shadow-xl">
+        Mod Posts
+      </a>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="md:hidden px-4 pb-4 hidden border-t border-gray-800">
+      <nav class="flex flex-col space-y-3 pt-4">
+        <a href="index.html" class="hover:text-primary transition-colors">Home</a>
+        <a href="trending.html" class="hover:text-primary transition-colors">Trending</a>
+        <a href="pomodoro.html" class="hover:text-primary transition-colors">Pomodoro</a>
+        <a href="cutoffs.html" class="hover:text-primary transition-colors">Cutoffs</a>
+        <a href="about-us.html" class="hover:text-primary transition-colors">About Us</a>
+        <a href="mod.html" class="bg-gradient-to-r from-primary to-secondary px-4 py-2 rounded-lg text-white text-center transition-all">
+          Mod Posts
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container mx-auto px-6 py-8">
+
+    <!-- Hero Section -->
+    <div class="text-center mb-12 animate-fade-in">
+      <h1 class="text-5xl md:text-6xl font-bold mb-4">
+        <span class="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+          📚 Study Materials
+        </span>
+      </h1>
+      <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+        Comprehensive resources, notes, and practice materials for JEE & NEET preparation
+      </p>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="grid md:grid-cols-4 gap-6 mb-12 animate-slide-up">
+      <div class="bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl p-6 border border-primary/30 text-center">
+        <div class="text-4xl mb-3 animate-float">📖</div>
+        <h3 class="text-lg font-semibold mb-2">Notes</h3>
+        <p class="text-2xl font-bold text-primary">150+</p>
+      </div>
+      
+      <div class="bg-gradient-to-br from-secondary/20 to-secondary/5 rounded-2xl p-6 border border-secondary/30 text-center">
+        <div class="text-4xl mb-3 animate-float" style="animation-delay: 0.5s;">🧪</div>
+        <h3 class="text-lg font-semibold mb-2">Practice Tests</h3>
+        <p class="text-2xl font-bold text-secondary">50+</p>
+      </div>
+      
+      <div class="bg-gradient-to-br from-accent/20 to-accent/5 rounded-2xl p-6 border border-accent/30 text-center">
+        <div class="text-4xl mb-3 animate-float" style="animation-delay: 1s;">📝</div>
+        <h3 class="text-lg font-semibold mb-2">Question Banks</h3>
+        <p class="text-2xl font-bold text-accent">10K+</p>
+      </div>
+      
+      <div class="bg-gradient-to-br from-yellow-500/20 to-yellow-500/5 rounded-2xl p-6 border border-yellow-500/30 text-center">
+        <div class="text-4xl mb-3 animate-float" style="animation-delay: 1.5s;">🎯</div>
+        <h3 class="text-lg font-semibold mb-2">Mock Tests</h3>
+        <p class="text-2xl font-bold text-yellow-400">25+</p>
+      </div>
+    </div>
+
+    <!-- Subject Tabs -->
+    <div class="flex justify-center mb-8 animate-slide-up">
+      <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-2 border border-gray-700/50">
+        <div class="flex flex-wrap gap-2 justify-center">
+          <button class="subject-tab active px-6 py-3 rounded-xl font-semibold" data-subject="physics">
+            ⚛️ Physics
+          </button>
+          <button class="subject-tab bg-gray-700 hover:bg-gray-600 px-6 py-3 rounded-xl font-semibold" data-subject="chemistry">
+            🧪 Chemistry
+          </button>
+          <button class="subject-tab bg-gray-700 hover:bg-gray-600 px-6 py-3 rounded-xl font-semibold" data-subject="mathematics">
+            📐 Mathematics
+          </button>
+          <button class="subject-tab bg-gray-700 hover:bg-gray-600 px-6 py-3 rounded-xl font-semibold" data-subject="biology">
+            🧬 Biology
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Study Materials Grid -->
+    <section id="materialsGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 animate-bounce-in">
+      <!-- Physics Materials (Default) -->
+      <div class="subject-content" data-subject="physics">
+        
+        <!-- NCERT Solutions -->
+        <div class="resource-card rounded-3xl p-8 card-hover">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-16 h-16 bg-primary/20 rounded-2xl flex items-center justify-center animate-float">
+              <span class="text-3xl">📚</span>
+            </div>
+            <div>
+              <h3 class="text-2xl font-bold text-primary">NCERT Solutions</h3>
+              <p class="text-gray-400">Class 11 & 12 Physics</p>
+            </div>
+          </div>
+          <p class="text-gray-300 mb-6">Complete solutions with detailed explanations for all NCERT Physics problems.</p>
+          <div class="flex gap-4">
+            <button class="bg-primary hover:bg-secondary px-4 py-2 rounded-lg transition-colors">
+              📖 Class 11
+            </button>
+            <button class="bg-primary hover:bg-secondary px-4 py-2 rounded-lg transition-colors">
+              📖 Class 12
+            </button>
+          </div>
+        </div>
+
+        <!-- Formula Sheets -->
+        <div class="resource-card rounded-3xl p-8 card-hover">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-16 h-16 bg-secondary/20 rounded-2xl flex items-center justify-center animate-float" style="animation-delay: 0.5s;">
+              <span class="text-3xl">📜</span>
+            </div>
+            <div>
+              <h3 class="text-2xl font-bold text-secondary">Formula Sheets</h3>
+              <p class="text-gray-400">Quick Reference</p>
+            </div>
+          </div>
+          <p class="text-gray-300 mb-6">Comprehensive formula sheets for all Physics chapters with derivations.</p>
+          <div class="space-y-3">
+            <div class="bg-gray-700/50 rounded-lg p-3">
+              <span class="text-accent">✓</span> Mechanics & Kinematics
+            </div>
+            <div class="bg-gray-700/50 rounded-lg p-3">
+              <span class="text-accent">✓</span> Thermodynamics & Waves
+            </div>
+            <div class="bg-gray-700/50 rounded-lg p-3">
+              <span class="text-accent">✓</span> Electromagnetism
+            </div>
+          </div>
+        </div>
+
+        <!-- Previous Year Papers -->
+        <div class="resource-card rounded-3xl p-8 card-hover">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-16 h-16 bg-accent/20 rounded-2xl flex items-center justify-center animate-float" style="animation-delay: 1s;">
+              <span class="text-3xl">📋</span>
+            </div>
+            <div>
+              <h3 class="text-2xl font-bold text-accent">Previous Year Papers</h3>
+              <p class="text-gray-400">JEE Main & Advanced</p>
+            </div>
+          </div>
+          <p class="text-gray-300 mb-6">Solved papers from the last 10 years with detailed analysis and solutions.</p>
+          <div class="grid grid-cols-2 gap-3">
+            <button class="bg-accent/20 hover:bg-accent/30 border border-accent/50 px-3 py-2 rounded-lg transition-colors text-sm">
+              2024 Papers
+            </button>
+            <button class="bg-accent/20 hover:bg-accent/30 border border-accent/50 px-3 py-2 rounded-lg transition-colors text-sm">
+              2023 Papers
+            </button>
+            <button class="bg-accent/20 hover:bg-accent/30 border border-accent/50 px-3 py-2 rounded-lg transition-colors text-sm">
+              Topic-wise
+            </button>
+            <button class="bg-accent/20 hover:bg-accent/30 border border-accent/50 px-3 py-2 rounded-lg transition-colors text-sm">
+              All Years
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Coming Soon Banner -->
+    <div class="mt-16 text-center animate-fade-in">
+      <div class="bg-gradient-to-r from-yellow-500/20 via-orange-500/20 to-red-500/20 rounded-3xl p-12 border border-yellow-500/30 animate-glow">
+        <div class="text-6xl mb-6 animate-float">🚧</div>
+        <h2 class="text-4xl font-bold mb-4">
+          <span class="bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
+            More Resources Coming Soon!
+          </span>
+        </h2>
+        <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+          We're working hard to bring you comprehensive study materials for all subjects. Stay tuned for Chemistry, Mathematics, and Biology resources!
+        </p>
+        <div class="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          <div class="bg-gray-800/50 rounded-2xl p-6 border border-gray-700/50">
+            <div class="text-3xl mb-3">🧪</div>
+            <h3 class="text-lg font-semibold text-blue-400">Chemistry</h3>
+            <p class="text-gray-400 text-sm">Organic, Inorganic & Physical</p>
+          </div>
+          <div class="bg-gray-800/50 rounded-2xl p-6 border border-gray-700/50">
+            <div class="text-3xl mb-3">📐</div>
+            <h3 class="text-lg font-semibold text-green-400">Mathematics</h3>
+            <p class="text-gray-400 text-sm">Calculus, Algebra & Geometry</p>
+          </div>
+          <div class="bg-gray-800/50 rounded-2xl p-6 border border-gray-700/50">
+            <div class="text-3xl mb-3">🧬</div>
+            <h3 class="text-lg font-semibold text-purple-400">Biology</h3>
+            <p class="text-gray-400 text-sm">Botany & Zoology</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-black/40 backdrop-blur-md mt-16 py-8 border-t border-gray-700/50">
+    <div class="container mx-auto px-6 text-center">
+      <p class="text-gray-400">© 2025 JEENEETards - Your trusted companion for competitive exam preparation</p>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    document.getElementById('menu-toggle').addEventListener('click', function() {
+      const mobileMenu = document.getElementById('mobile-menu');
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // Subject tab functionality
+    document.querySelectorAll('.subject-tab').forEach(tab => {
+      tab.addEventListener('click', function() {
+        // Remove active class from all tabs
+        document.querySelectorAll('.subject-tab').forEach(t => {
+          t.classList.remove('active');
+          t.classList.add('bg-gray-700', 'hover:bg-gray-600');
+        });
+        
+        // Add active class to clicked tab
+        this.classList.add('active');
+        this.classList.remove('bg-gray-700', 'hover:bg-gray-600');
+        
+        // Show relevant content (placeholder for now)
+        const subject = this.dataset.subject;
+        showComingSoon(subject);
+      });
+    });
+
+    function showComingSoon(subject) {
+      if (subject === 'physics') return; // Physics content is already shown
+      
+      const materialsGrid = document.getElementById('materialsGrid');
+      const subjectNames = {
+        chemistry: '🧪 Chemistry',
+        mathematics: '📐 Mathematics', 
+        biology: '🧬 Biology'
+      };
+      
+      materialsGrid.innerHTML = `
+        <div class="col-span-full text-center py-16">
+          <div class="bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm rounded-3xl p-12 border border-gray-700/50">
+            <div class="text-6xl mb-6 animate-float">📚</div>
+            <h2 class="text-4xl font-bold mb-4 text-primary">${subjectNames[subject]} Materials</h2>
+            <p class="text-xl text-gray-300 mb-8">
+              We're working on comprehensive ${subject} resources including NCERT solutions, formula sheets, and practice tests.
+            </p>
+            <div class="bg-yellow-500/20 border border-yellow-500/30 rounded-2xl p-6 max-w-md mx-auto">
+              <div class="text-3xl mb-3">⏳</div>
+              <p class="text-yellow-400 font-semibold">Coming Very Soon!</p>
+              <p class="text-gray-400 text-sm mt-2">We'll notify you when ${subject} materials are ready.</p>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Add loading animation on page load
+    window.addEventListener('load', () => {
+      document.body.classList.add('animate-fade-in');
+    });
+
+    // Add intersection observer for scroll animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-slide-up');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.resource-card').forEach(card => {
+      observer.observe(card);
+    });
+  </script>
 
 </body>
 </html>
