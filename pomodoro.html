@@ -2,89 +2,495 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Pomodoro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pomodoro Timer - JEENEETards</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#10b981',
+            secondary: '#059669',
+            accent: '#34d399'
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.6s ease-in-out',
+            'slide-up': 'slideUp 0.5s ease-out',
+            'bounce-in': 'bounceIn 0.8s ease-out',
+            'glow': 'glow 2s ease-in-out infinite alternate',
+            'pulse-ring': 'pulseRing 2s ease-in-out infinite',
+            'float': 'float 3s ease-in-out infinite',
+            'timer-pulse': 'timerPulse 1s ease-in-out infinite'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes bounceIn {
+      0% {
+        transform: scale(0.3);
+        opacity: 0;
+      }
+      50% {
+        transform: scale(1.05);
+      }
+      70% {
+        transform: scale(0.9);
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes glow {
+      from {
+        box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+      }
+      to {
+        box-shadow: 0 0 30px rgba(16, 185, 129, 0.8);
+      }
+    }
+
+    @keyframes pulseRing {
+      0% {
+        transform: scale(0.33);
+      }
+      40%, 50% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        transform: scale(1.33);
+      }
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    @keyframes timerPulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+    }
+
+    .gradient-bg {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+    }
+
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .timer-circle {
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, #10b981 0%, #059669 50%, #34d399 100%);
+      padding: 8px;
+    }
+
+    .timer-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: #111827;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .progress-ring {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .progress-ring circle {
+      transition: stroke-dashoffset 1s ease;
+    }
+  </style>
 </head>
 <body class="bg-gray-900 text-white font-sans">
 
-  <header class="bg-gray-900 sticky top-0 z-50 shadow-md">
-    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between px-4 py-5">
-      <a href="index.html" class="flex items-center gap-3">
-        <img src="/assets/communityIcon_j5nctdyq50rb1.jpg" alt="Logo" class="w-10 h-10 rounded-full">
+  <!-- Header -->
+  <header class="bg-gray-900 shadow-lg sticky top-0 z-50 border-b border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-wrap items-center justify-between">
+      <div class="flex items-center gap-3">
+        <img src="/assets/communityIcon_j5nctdyq50rb1.jpg" alt="JEENEETards Logo" class="w-10 h-10 rounded-full border-2 border-primary" />
         <span class="text-xl font-bold text-white">JEENEETards</span>
-      </a>
+      </div>
 
-      <nav class="flex flex-wrap gap-4 mt-4 md:mt-0 text-sm md:text-base">
-        <a href="index.html" class="hover:font-semibold hover:underline hover:text-lime-300">Home</a>
-        <a href="trending.html" class="hover:font-semibold hover:underline hover:text-lime-300">Trending</a>
-        <a href="pomodoro.html" class="hover:font-semibold hover:underline hover:text-lime-300">Pomodoro</a>
-        <a href="cutoffs.html" class="hover:font-semibold hover:underline hover:text-lime-300">Cutoffs</a>  
-        <a href="about-us.html" class="hover:font-semibold hover:underline hover:text-lime-300">About Us</a>
+      <!-- Hamburger Button -->
+      <button id="menu-toggle" class="md:hidden text-white focus:outline-none hover:text-primary transition-colors">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex gap-6 text-sm md:text-base">
+        <a href="index.html" class="hover:text-primary transition-colors duration-200">Home</a>
+        <a href="trending.html" class="hover:text-primary transition-colors duration-200">Trending</a>
+        <a href="pomodoro.html" class="text-primary font-semibold border-b-2 border-primary pb-1">Pomodoro</a>
+        <a href="cutoffs.html" class="hover:text-primary transition-colors duration-200">Cutoffs</a>
+        <a href="about-us.html" class="hover:text-primary transition-colors duration-200">About Us</a>
       </nav>
 
-      <a href="/mod.html" class="mt-4 md:mt-0 bg-green-500 hover:bg-green-700 text-white text-sm px-4 py-2 rounded shadow transition duration-300">
-        Mod Appreciated Posts
+      <a href="mod.html" class="hidden md:inline bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary px-4 py-2 rounded-lg text-sm text-white transition-all duration-300 shadow-lg hover:shadow-xl">
+        Mod Posts
       </a>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="md:hidden px-4 pb-4 hidden border-t border-gray-800">
+      <nav class="flex flex-col space-y-3 pt-4">
+        <a href="index.html" class="hover:text-primary transition-colors">Home</a>
+        <a href="trending.html" class="hover:text-primary transition-colors">Trending</a>
+        <a href="pomodoro.html" class="text-primary font-semibold">Pomodoro</a>
+        <a href="cutoffs.html" class="hover:text-primary transition-colors">Cutoffs</a>
+        <a href="about-us.html" class="hover:text-primary transition-colors">About Us</a>
+        <a href="mod.html" class="bg-gradient-to-r from-primary to-secondary px-4 py-2 rounded-lg text-white text-center transition-all">
+          Mod Posts
+        </a>
+      </nav>
     </div>
   </header>
 
-  <section class="text-center px-4 sm:px-6 md:px-10 lg:px-20 py-12 max-w-4xl mx-auto">
-    <h1 class="text-4xl font-bold text-lime-400 mb-2">🍅 Custom Pomodoro Timer</h1>
-    <p class="mb-6 text-gray-400">Set your own focus & break durations.</p>
+  <!-- Main Content -->
+  <main class="container mx-auto px-6 py-8">
 
-    <div class="mb-6 flex flex-wrap justify-center gap-4">
-      <label class="text-sm">Focus (min): 
-        <input id="focusInput" type="number" value="25" class="text-black w-20 px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-lime-300"/>
-      </label>
-      <label class="text-sm">Break (min): 
-        <input id="breakInput" type="number" value="5" class="text-black w-20 px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-lime-300"/>
-      </label>
-      <button onclick="setCustomTimes()" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-md transition shadow-sm">Set</button>
+    <!-- Hero Section -->
+    <div class="text-center mb-12 animate-fade-in">
+      <h1 class="text-5xl md:text-6xl font-bold mb-4">
+        <span class="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+          🍅 Pomodoro Timer
+        </span>
+      </h1>
+      <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+        Focus deeply, rest well. Master your productivity with the proven Pomodoro Technique.
+      </p>
     </div>
 
-    <div class="text-5xl sm:text-6xl font-mono mb-6" id="timer">25:00</div>
-    <p id="sessionType" class="mb-4 text-lg font-semibold text-yellow-300">Session: Focus</p>
+    <!-- Timer Settings -->
+    <section class="mb-12 animate-slide-up">
+      <div class="bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm rounded-3xl p-8 border border-gray-700/50 card-hover">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-12 h-12 bg-primary/20 rounded-xl flex items-center justify-center">
+            <span class="text-2xl">⚙️</span>
+          </div>
+          <h2 class="text-2xl font-bold text-primary">Timer Settings</h2>
+        </div>
 
-    <div class="flex flex-wrap justify-center gap-4 mt-6">
-      <button onclick="startTimer()" class="bg-lime-300 hover:bg-lime-600 text-white font-bold py-2 px-4 rounded-md transition">Start</button>
-      <button onclick="pauseTimer()" class="bg-yellow-300 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-md transition">Pause</button>
-      <button onclick="resetTimer()" class="bg-red-300 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-md transition">Reset</button>
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="bg-gray-700/30 rounded-2xl p-6 border border-gray-600/30">
+            <label class="block text-lg font-semibold mb-3 text-accent">Focus Duration (minutes)</label>
+            <input id="focusInput" type="number" value="25" min="1" max="120"
+              class="w-full bg-gray-600 text-white px-4 py-3 rounded-xl border border-gray-500 focus:border-primary focus:ring-2 focus:ring-primary/50 transition-all duration-300 text-lg" />
+          </div>
+
+          <div class="bg-gray-700/30 rounded-2xl p-6 border border-gray-600/30">
+            <label class="block text-lg font-semibold mb-3 text-secondary">Break Duration (minutes)</label>
+            <input id="breakInput" type="number" value="5" min="1" max="60"
+              class="w-full bg-gray-600 text-white px-4 py-3 rounded-xl border border-gray-500 focus:border-secondary focus:ring-2 focus:ring-secondary/50 transition-all duration-300 text-lg" />
+          </div>
+
+          <div class="flex items-end">
+            <button onclick="setCustomTimes()" 
+              class="w-full bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary px-6 py-3 rounded-xl text-white font-semibold transition-all duration-300 shadow-lg hover:shadow-xl animate-glow">
+              Apply Settings
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Timer Display -->
+    <section class="mb-12 animate-bounce-in">
+      <div class="bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm rounded-3xl p-8 border border-gray-700/50 card-hover">
+        <div class="text-center">
+          <!-- Timer Circle -->
+          <div class="relative flex justify-center mb-8">
+            <div class="timer-circle animate-float">
+              <div class="timer-inner">
+                <div id="timer" class="text-5xl md:text-6xl font-mono font-bold text-white animate-timer-pulse">25:00</div>
+                <div id="sessionType" class="text-xl font-semibold text-primary mt-2">Focus Session</div>
+              </div>
+            </div>
+            
+            <!-- Progress Ring -->
+            <svg class="progress-ring w-80 h-80" viewBox="0 0 120 120">
+              <circle cx="60" cy="60" r="54" fill="none" stroke="#374151" stroke-width="4"/>
+              <circle id="progressCircle" cx="60" cy="60" r="54" fill="none" stroke="#10b981" stroke-width="4"
+                stroke-linecap="round" stroke-dasharray="339.292" stroke-dashoffset="0"
+                transform="rotate(-90 60 60)"/>
+            </svg>
+          </div>
+
+          <!-- Session Info -->
+          <div class="grid md:grid-cols-3 gap-4 mb-8">
+            <div class="bg-primary/20 rounded-2xl p-4 border border-primary/30">
+              <div class="text-2xl font-bold text-primary" id="currentSession">1</div>
+              <div class="text-sm text-gray-300">Current Session</div>
+            </div>
+            <div class="bg-secondary/20 rounded-2xl p-4 border border-secondary/30">
+              <div class="text-2xl font-bold text-secondary" id="completedSessions">0</div>
+              <div class="text-sm text-gray-300">Completed</div>
+            </div>
+            <div class="bg-accent/20 rounded-2xl p-4 border border-accent/30">
+              <div class="text-2xl font-bold text-accent" id="totalTime">0m</div>
+              <div class="text-sm text-gray-300">Total Time</div>
+            </div>
+          </div>
+
+          <!-- Control Buttons -->
+          <div class="flex flex-wrap justify-center gap-4">
+            <button onclick="startTimer()" id="startBtn"
+              class="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl">
+              ▶️ Start
+            </button>
+            <button onclick="pauseTimer()" id="pauseBtn"
+              class="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl">
+              ⏸️ Pause
+            </button>
+            <button onclick="resetTimer()" id="resetBtn"
+              class="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl">
+              🔄 Reset
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="animate-slide-up">
+      <div class="bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm rounded-3xl p-8 border border-gray-700/50 card-hover">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-12 h-12 bg-yellow-500/20 rounded-xl flex items-center justify-center">
+            <span class="text-2xl">📊</span>
+          </div>
+          <h2 class="text-2xl font-bold text-yellow-400">Today's Productivity</h2>
+        </div>
+
+        <div class="grid md:grid-cols-4 gap-6">
+          <div class="text-center p-6 bg-gray-700/30 rounded-2xl">
+            <div class="text-3xl font-bold text-primary mb-2" id="todayFocus">0h 0m</div>
+            <div class="text-gray-300">Focus Time</div>
+          </div>
+          <div class="text-center p-6 bg-gray-700/30 rounded-2xl">
+            <div class="text-3xl font-bold text-secondary mb-2" id="todayBreaks">0</div>
+            <div class="text-gray-300">Breaks Taken</div>
+          </div>
+          <div class="text-center p-6 bg-gray-700/30 rounded-2xl">
+            <div class="text-3xl font-bold text-accent mb-2" id="productivity">0%</div>
+            <div class="text-gray-300">Productivity</div>
+          </div>
+          <div class="text-center p-6 bg-gray-700/30 rounded-2xl">
+            <div class="text-3xl font-bold text-yellow-400 mb-2" id="streak">0</div>
+            <div class="text-gray-300">Day Streak</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-black/40 backdrop-blur-md mt-16 py-8 border-t border-gray-700/50">
+    <div class="container mx-auto px-6 text-center">
+      <p class="text-gray-400">© 2025 JEENEETards - Your trusted companion for competitive exam preparation</p>
     </div>
-  </section>
+  </footer>
 
   <script>
     let timer;
     let focusDuration = 25 * 60;
     let breakDuration = 5 * 60;
     let timeLeft = focusDuration;
+    let totalTime = focusDuration;
     let isRunning = false;
     let onBreak = false;
+    let sessionCount = 1;
+    let completedSessions = 0;
+    let totalFocusTime = 0;
+    let totalBreaks = 0;
+
+    // Load saved data
+    function loadStats() {
+      const saved = localStorage.getItem('pomodoroStats');
+      if (saved) {
+        const stats = JSON.parse(saved);
+        totalFocusTime = stats.totalFocusTime || 0;
+        totalBreaks = stats.totalBreaks || 0;
+        updateStatsDisplay();
+      }
+    }
+
+    // Save stats
+    function saveStats() {
+      const stats = {
+        totalFocusTime,
+        totalBreaks,
+        lastUpdate: new Date().toDateString()
+      };
+      localStorage.setItem('pomodoroStats', JSON.stringify(stats));
+    }
 
     function updateDisplay() {
       const minutes = Math.floor(timeLeft / 60);
       const seconds = timeLeft % 60;
       const formatted = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+      
       document.getElementById("timer").textContent = formatted;
-      document.getElementById("sessionType").textContent = `Session: ${onBreak ? "Break" : "Focus"}`;
-      document.title = `⏱ ${formatted} • ${onBreak ? "Break" : "Focus"} | JEENEETards`;
+      document.getElementById("sessionType").textContent = onBreak ? "Break Time" : "Focus Session";
+      document.getElementById("currentSession").textContent = sessionCount;
+      document.getElementById("completedSessions").textContent = completedSessions;
+      
+      // Update page title
+      const emoji = onBreak ? "☕" : "🍅";
+      document.title = `${emoji} ${formatted} • ${onBreak ? "Break" : "Focus"} | JEENEETards`;
+      
+      // Update progress ring
+      const progress = 1 - (timeLeft / totalTime);
+      const circumference = 2 * Math.PI * 54;
+      const offset = circumference * (1 - progress);
+      document.getElementById("progressCircle").style.strokeDashoffset = offset;
+      
+      // Change colors based on session type
+      const progressCircle = document.getElementById("progressCircle");
+      progressCircle.style.stroke = onBreak ? "#059669" : "#10b981";
+      
+      updateStatsDisplay();
+    }
+
+    function updateStatsDisplay() {
+      const focusHours = Math.floor(totalFocusTime / 3600);
+      const focusMinutes = Math.floor((totalFocusTime % 3600) / 60);
+      document.getElementById("todayFocus").textContent = `${focusHours}h ${focusMinutes}m`;
+      document.getElementById("todayBreaks").textContent = totalBreaks;
+      
+      const productivity = totalFocusTime > 0 ? Math.round((totalFocusTime / (8 * 3600)) * 100) : 0;
+      document.getElementById("productivity").textContent = `${Math.min(productivity, 100)}%`;
+      
+      const streak = Math.floor(totalFocusTime / (25 * 60));
+      document.getElementById("streak").textContent = streak;
+      
+      const totalMinutes = Math.floor(totalFocusTime / 60);
+      document.getElementById("totalTime").textContent = `${totalMinutes}m`;
+    }
+
+    function playNotificationSound() {
+      // Create a simple notification sound
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      oscillator.frequency.value = onBreak ? 800 : 1000;
+      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+      
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 0.5);
+    }
+
+    function showNotification(message) {
+      if ('Notification' in window && Notification.permission === 'granted') {
+        new Notification('Pomodoro Timer', {
+          body: message,
+          icon: '/assets/communityIcon_j5nctdyq50rb1.jpg'
+        });
+      }
     }
 
     function startTimer() {
       if (isRunning) return;
+      
+      // Request notification permission
+      if ('Notification' in window && Notification.permission === 'default') {
+        Notification.requestPermission();
+      }
+      
       isRunning = true;
       timer = setInterval(() => {
         if (timeLeft > 0) {
           timeLeft--;
+          if (!onBreak) {
+            totalFocusTime++;
+          }
           updateDisplay();
         } else {
           clearInterval(timer);
-          onBreak = !onBreak;
-          timeLeft = onBreak ? breakDuration : focusDuration;
           isRunning = false;
+          
+          playNotificationSound();
+          
+          if (onBreak) {
+            // Break finished, start new focus session
+            onBreak = false;
+            sessionCount++;
+            timeLeft = focusDuration;
+            totalTime = focusDuration;
+            showNotification("Break's over! Time to focus again.");
+            document.body.style.background = 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%)';
+          } else {
+            // Focus session finished, start break
+            onBreak = true;
+            completedSessions++;
+            totalBreaks++;
+            timeLeft = breakDuration;
+            totalTime = breakDuration;
+            showNotification("Great job! Time for a well-deserved break.");
+            document.body.style.background = 'linear-gradient(135deg, #1e293b 0%, #059669 50%, #0f172a 100%)';
+          }
+          
           updateDisplay();
-          alert(onBreak ? "Break time!" : "Back to focus.");
-          startTimer();
+          saveStats();
+          
+          // Auto-start next session after 3 seconds
+          setTimeout(() => {
+            if (!isRunning) startTimer();
+          }, 3000);
         }
       }, 1000);
     }
@@ -92,28 +498,93 @@
     function pauseTimer() {
       clearInterval(timer);
       isRunning = false;
+      updateDisplay();
     }
 
     function resetTimer() {
       clearInterval(timer);
-      timeLeft = onBreak ? breakDuration : focusDuration;
+      onBreak = false;
+      timeLeft = focusDuration;
+      totalTime = focusDuration;
       isRunning = false;
+      sessionCount = 1;
+      completedSessions = 0;
+      document.body.style.background = '';
       updateDisplay();
     }
 
     function setCustomTimes() {
       const focus = parseInt(document.getElementById("focusInput").value) || 25;
       const rest = parseInt(document.getElementById("breakInput").value) || 5;
+      
       focusDuration = focus * 60;
       breakDuration = rest * 60;
-      timeLeft = focusDuration;
-      onBreak = false;
-      isRunning = false;
-      clearInterval(timer);
-      updateDisplay();
+      
+      if (!isRunning) {
+        timeLeft = onBreak ? breakDuration : focusDuration;
+        totalTime = onBreak ? breakDuration : focusDuration;
+        updateDisplay();
+      }
+      
+      // Show confirmation
+      const button = event.target;
+      const originalText = button.textContent;
+      button.textContent = "✅ Applied!";
+      button.style.background = "linear-gradient(to right, #10b981, #34d399)";
+      
+      setTimeout(() => {
+        button.textContent = originalText;
+        button.style.background = "";
+      }, 2000);
     }
 
+    // Mobile menu toggle
+    document.getElementById('menu-toggle').addEventListener('click', function() {
+      const mobileMenu = document.getElementById('mobile-menu');
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+      if (e.code === 'Space' && !e.target.matches('input')) {
+        e.preventDefault();
+        if (isRunning) {
+          pauseTimer();
+        } else {
+          startTimer();
+        }
+      }
+      if (e.code === 'Escape') {
+        resetTimer();
+      }
+    });
+
+    // Initialize
+    loadStats();
     updateDisplay();
+
+    // Add loading animation on page load
+    window.addEventListener('load', () => {
+      document.body.classList.add('animate-fade-in');
+    });
+
+    // Add intersection observer for scroll animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-slide-up');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('section').forEach(section => {
+      observer.observe(section);
+    });
   </script>
 
 </body>
