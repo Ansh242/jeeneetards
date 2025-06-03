@@ -58,7 +58,14 @@
         <img src="/assets/communityIcon_j5nctdyq50rb1.jpg" alt="Logo" class="w-10 h-10 rounded-full" />
         <span class="text-xl font-bold text-white">JEENEETards</span>
       </div>
-      <nav class="flex flex-wrap gap-4 mt-4 md:mt-0 text-sm md:text-base">
+      <!-- Hamburger Button -->
+      <button id="menu-toggle" class="md:hidden text-white focus:outline-none">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>     
+      <nav class="hidden md:flex gap-4 text-sm md:text-base">
         <a href="index.html" class="hover:font-semibold hover:underline hover:text-lime-300">Home</a>
         <a href="trending.html" class="hover:font-semibold hover:underline hover:text-lime-300">Trending</a>
         <a href="pomodoro.html" class="hover:font-semibold hover:underline hover:text-lime-300">Pomodoro</a>
@@ -67,7 +74,20 @@
       </nav>
       <a href="/mod.html" class="mt-4 md:mt-0 bg-green-500 hover:bg-green-800 px-4 py-2 rounded text-sm text-white">Mod Appreciated Posts</a>
     </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="md:hidden px-4 pb-4 hidden">
+      <nav class="flex flex-col space-y-2 text-sm">
+        <a href="index.html" class="hover:font-semibold hover:underline hover:text-lime-300">Home</a>
+        <a href="trending.html" class="hover:font-semibold hover:underline hover:text-lime-300">Trending</a>
+        <a href="pomodoro.html" class="hover:font-semibold hover:underline hover:text-lime-300">Pomodoro</a>
+        <a href="cutoffs.html" class="hover:font-semibold hover:underline hover:text-lime-300">Cutoffs</a>
+        <a href="about-us.html" class="hover:font-semibold hover:underline hover:text-lime-300">About Us</a>
+        <a href="/mod.html" class="bg-green-500 hover:bg-green-800 px-3 py-2 rounded text-white text-center">Mod Appreciated Posts</a>
+      </nav>
+    </div>
   </header>
+  
 
   <main class="px-4 py-10 max-w-7xl mx-auto space-y-12">
     
