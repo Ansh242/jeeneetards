@@ -2,47 +2,331 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>About Us</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us - JEENEETards</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#10b981',
+            secondary: '#059669',
+            accent: '#34d399'
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.6s ease-in-out',
+            'slide-up': 'slideUp 0.5s ease-out',
+            'bounce-in': 'bounceIn 0.8s ease-out',
+            'glow': 'glow 2s ease-in-out infinite alternate',
+            'float': 'float 3s ease-in-out infinite'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes bounceIn {
+      0% {
+        transform: scale(0.3);
+        opacity: 0;
+      }
+      50% {
+        transform: scale(1.05);
+      }
+      70% {
+        transform: scale(0.9);
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes glow {
+      from {
+        box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+      }
+      to {
+        box-shadow: 0 0 30px rgba(16, 185, 129, 0.8);
+      }
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    .gradient-bg {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+    }
+
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .text-gradient {
+      background: linear-gradient(45deg, #10b981, #34d399, #059669);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+  </style>
 </head>
 <body class="bg-gray-900 text-white font-sans">
 
-  <header class="bg-gray-900 sticky top-0 z-50 shadow-md">
-    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between px-4 py-5">
-      <a href="index.html" class="flex items-center gap-3">
-        <img src="/assets/communityIcon_j5nctdyq50rb1.jpg" alt="Logo" class="w-10 h-10 rounded-full">
+  <!-- Header -->
+  <header class="bg-gray-900 shadow-lg sticky top-0 z-50 border-b border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-wrap items-center justify-between">
+      <div class="flex items-center gap-3">
+        <img src="/assets/communityIcon_j5nctdyq50rb1.jpg" alt="JEENEETards Logo" class="w-10 h-10 rounded-full border-2 border-primary" />
         <span class="text-xl font-bold text-white">JEENEETards</span>
-      </a>
+      </div>
 
-      <nav class="flex flex-wrap gap-4 mt-4 md:mt-0 text-sm md:text-base">
-        <a href="index.html" class="hover:font-semibold hover:underline hover:text-lime-300">Home</a>
-        <a href="trending.html" class="hover:font-semibold hover:underline hover:text-lime-300">Trending</a>
-        <a href="pomodoro.html" class="hover:font-semibold hover:underline hover:text-lime-300">Pomodoro</a>
-        <a href="cutoffs.html" class="hover:font-semibold hover:underline hover:text-lime-300">Cutoffs</a>  
-        <a href="about-us.html" class="hover:font-semibold hover:underline hover:text-lime-300">About Us</a>
+      <!-- Hamburger Button -->
+      <button id="menu-toggle" class="md:hidden text-white focus:outline-none hover:text-primary transition-colors">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex gap-6 text-sm md:text-base">
+        <a href="index.html" class="hover:text-primary transition-colors duration-200">Home</a>
+        <a href="trending.html" class="hover:text-primary transition-colors duration-200">Trending</a>
+        <a href="pomodoro.html" class="hover:text-primary transition-colors duration-200">Pomodoro</a>
+        <a href="cutoffs.html" class="hover:text-primary transition-colors duration-200">Cutoffs</a>
+        <a href="about-us.html" class="text-primary font-semibold border-b-2 border-primary pb-1">About Us</a>
       </nav>
 
-      <a href="/mod.html" class="mt-4 md:mt-0 bg-green-500 hover:bg-green-700 text-white text-sm px-4 py-2 rounded shadow transition duration-300">
-        Mod Appreciated Posts
+      <a href="mod.html" class="hidden md:inline bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary px-4 py-2 rounded-lg text-sm text-white transition-all duration-300 shadow-lg hover:shadow-xl">
+        Mod Posts
       </a>
     </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="md:hidden px-4 pb-4 hidden border-t border-gray-800">
+      <nav class="flex flex-col space-y-3 pt-4">
+        <a href="index.html" class="hover:text-primary transition-colors">Home</a>
+        <a href="trending.html" class="hover:text-primary transition-colors">Trending</a>
+        <a href="pomodoro.html" class="hover:text-primary transition-colors">Pomodoro</a>
+        <a href="cutoffs.html" class="hover:text-primary transition-colors">Cutoffs</a>
+        <a href="about-us.html" class="text-primary font-semibold">About Us</a>
+        <a href="mod.html" class="bg-gradient-to-r from-primary to-secondary px-4 py-2 rounded-lg text-white text-center transition-all">
+          Mod Posts
+        </a>
+      </nav>
+    </div>
   </header>
-  
-  <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <section class="bg-gray-800 p-8 rounded-xl shadow-xl space-y-6">
-      <h1 class="text-3xl sm:text-4xl font-bold text-lime-400 text-center">About Us</h1>
-      <p class="text-gray-300 text-lg leading-relaxed">
-        Jeeneetards is not your typical coaching cult. We are the outliers, the misunderstood, the ones who got tired of hearing “Just do NCERT and pray.” Born from the chaos of JEE and NEET prep, we are battle-scarred droppers, repeaters, and rebels who’ve faced pressure, isolation, and the crushing weight of expectations and still chose to fight.
+
+  <!-- Main Content -->
+  <main class="container mx-auto px-6 py-8">
+
+    <!-- Hero Section -->
+    <div class="text-center mb-16 animate-fade-in">
+      <h1 class="text-5xl md:text-6xl font-bold mb-6">
+        <span class="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+          🔥 About JEENEETards
+        </span>
+      </h1>
+      <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+        The rebellion against conventional coaching culture
       </p>
-      <p class="text-gray-300 text-lg leading-relaxed">
-        We don’t flex ranks, we expose lies. We believe in strategy over syllabus, mindset over marks, and raw truth over polished garbage. This space is for those who are done being lost in the noise and ready to move with clarity.
-      </p>
-      <p class="text-gray-300 text-lg leading-relaxed font-semibold italic text-center">
-        If you’re looking for hope, this isn’t it. If you’re looking for fire, welcome home.
-      </p>
+    </div>
+
+    <!-- Mission Statement -->
+    <section class="mb-16 animate-slide-up">
+      <div class="bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm rounded-3xl p-8 border border-gray-700/50 card-hover">
+        <div class="flex items-center gap-4 mb-8">
+          <div class="w-16 h-16 bg-red-500/20 rounded-2xl flex items-center justify-center animate-float">
+            <span class="text-3xl">⚡</span>
+          </div>
+          <h2 class="text-3xl font-bold text-gradient">Our Mission</h2>
+        </div>
+        
+        <div class="space-y-6 text-lg">
+          <p class="text-gray-300 leading-relaxed">
+            <span class="text-red-400 font-semibold">JEENEETards</span> is not your typical coaching cult. We are the outliers, the misunderstood, the ones who got tired of hearing <span class="italic text-yellow-400">"Just do NCERT and pray."</span> Born from the chaos of JEE and NEET prep, we are battle-scarred droppers, repeaters, and rebels who've faced pressure, isolation, and the crushing weight of expectations and still chose to fight.
+          </p>
+          
+          <p class="text-gray-300 leading-relaxed">
+            We don't flex ranks, we <span class="text-accent font-semibold">expose lies</span>. We believe in <span class="text-primary">strategy over syllabus</span>, <span class="text-secondary">mindset over marks</span>, and <span class="text-accent">raw truth over polished garbage</span>. This space is for those who are done being lost in the noise and ready to move with clarity.
+          </p>
+          
+          <blockquote class="text-center py-8 px-6 bg-gray-700/30 rounded-2xl border-l-4 border-red-500 animate-glow">
+            <p class="text-xl font-bold italic text-red-400">
+              "If you're looking for hope, this isn't it. If you're looking for fire, welcome home."
+            </p>
+          </blockquote>
+        </div>
+      </div>
     </section>
+
+    <!-- Values Section -->
+    <section class="grid md:grid-cols-3 gap-8 mb-16">
+      <div class="bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl p-8 border border-primary/30 card-hover animate-bounce-in">
+        <div class="text-center">
+          <div class="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4 animate-float">
+            <span class="text-3xl">🎯</span>
+          </div>
+          <h3 class="text-2xl font-bold text-primary mb-4">Strategy First</h3>
+          <p class="text-gray-300">We prioritize smart preparation over endless grinding. Quality over quantity, always.</p>
+        </div>
+      </div>
+
+      <div class="bg-gradient-to-br from-secondary/20 to-secondary/5 rounded-2xl p-8 border border-secondary/30 card-hover animate-bounce-in" style="animation-delay: 0.2s;">
+        <div class="text-center">
+          <div class="w-16 h-16 bg-secondary/20 rounded-full flex items-center justify-center mx-auto mb-4 animate-float" style="animation-delay: 1s;">
+            <span class="text-3xl">🧠</span>
+          </div>
+          <h3 class="text-2xl font-bold text-secondary mb-4">Mindset Matters</h3>
+          <p class="text-gray-300">Mental strength and clarity are as important as academic knowledge in this journey.</p>
+        </div>
+      </div>
+
+      <div class="bg-gradient-to-br from-accent/20 to-accent/5 rounded-2xl p-8 border border-accent/30 card-hover animate-bounce-in" style="animation-delay: 0.4s;">
+        <div class="text-center">
+          <div class="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-4 animate-float" style="animation-delay: 2s;">
+            <span class="text-3xl">💯</span>
+          </div>
+          <h3 class="text-2xl font-bold text-accent mb-4">Raw Truth</h3>
+          <p class="text-gray-300">No sugar-coating, no false promises. Just honest insights and real experiences.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Community Stats -->
+    <section class="mb-16 animate-slide-up">
+      <div class="bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm rounded-3xl p-8 border border-gray-700/50 card-hover">
+        <div class="flex items-center gap-4 mb-8">
+          <div class="w-16 h-16 bg-blue-500/20 rounded-2xl flex items-center justify-center animate-float">
+            <span class="text-3xl">👥</span>
+          </div>
+          <h2 class="text-3xl font-bold text-gradient">Our Community</h2>
+        </div>
+        
+        <div class="grid md:grid-cols-4 gap-6">
+          <div class="text-center p-6 bg-gray-700/30 rounded-2xl">
+            <div class="text-3xl font-bold text-primary mb-2">50K+</div>
+            <div class="text-gray-300">Active Members</div>
+          </div>
+          <div class="text-center p-6 bg-gray-700/30 rounded-2xl">
+            <div class="text-3xl font-bold text-secondary mb-2">500+</div>
+            <div class="text-gray-300">Success Stories</div>
+          </div>
+          <div class="text-center p-6 bg-gray-700/30 rounded-2xl">
+            <div class="text-3xl font-bold text-accent mb-2">10K+</div>
+            <div class="text-gray-300">Daily Discussions</div>
+          </div>
+          <div class="text-center p-6 bg-gray-700/30 rounded-2xl">
+            <div class="text-3xl font-bold text-yellow-400 mb-2">24/7</div>
+            <div class="text-gray-300">Support System</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Join Us Section -->
+    <section class="text-center animate-bounce-in">
+      <div class="bg-gradient-to-r from-red-500/20 via-orange-500/20 to-yellow-500/20 rounded-3xl p-8 border border-red-500/30">
+        <h2 class="text-4xl font-bold mb-6">
+          <span class="bg-gradient-to-r from-red-400 to-yellow-400 bg-clip-text text-transparent">
+            Ready to Join the Rebellion?
+          </span>
+        </h2>
+        <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+          Stop following the crowd. Start your journey with those who understand the real struggle.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="index.html" class="bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary px-8 py-4 rounded-xl text-white font-semibold transition-all duration-300 shadow-lg hover:shadow-xl animate-glow">
+            Explore Resources
+          </a>
+          <a href="trending.html" class="bg-gradient-to-r from-gray-700 to-gray-600 hover:from-gray-600 hover:to-gray-500 px-8 py-4 rounded-xl text-white font-semibold transition-all duration-300 shadow-lg hover:shadow-xl">
+            Join Discussions
+          </a>
+        </div>
+      </div>
+    </section>
+
   </main>
+
+  <!-- Footer -->
+  <footer class="bg-black/40 backdrop-blur-md mt-16 py-8 border-t border-gray-700/50">
+    <div class="container mx-auto px-6 text-center">
+      <p class="text-gray-400">© 2025 JEENEETards - Your trusted companion for competitive exam preparation</p>
+      <p class="text-gray-500 text-sm mt-2">Built by rebels, for rebels. 🔥</p>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    document.getElementById('menu-toggle').addEventListener('click', function() {
+      const mobileMenu = document.getElementById('mobile-menu');
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // Add loading animation on page load
+    window.addEventListener('load', () => {
+      document.body.classList.add('animate-fade-in');
+    });
+
+    // Add intersection observer for scroll animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-slide-up');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('section').forEach(section => {
+      observer.observe(section);
+    });
+
+    // Add smooth scroll behavior
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
 
 </body>
 </html>
